@@ -15,7 +15,7 @@
     <div class="container">
        <div class="rounded  ">
         <div class="row">
-            <div class="offset-2 col-md-8 bg-success my-5" >
+            <div class="offset-2 col-md-8 bg-success my-5">
                 <h3>Login</h3>
             </div>
         </div>
