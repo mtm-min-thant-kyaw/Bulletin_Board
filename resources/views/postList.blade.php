@@ -25,21 +25,84 @@
             <th>Operation</th>
         </tr>
         <tr class="table">
-            <td>Title1</td>
+            <td>
+                             <!-- Button trigger modal -->
+<a  class="text-decoration-none" href="" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Details
+  </a>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">User Details</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+                    <form action="" enctype="multipart/form-data">
+                        @csrf
+                        <label for="" class="form-control">Title:</label>
+                        <label for="" class="form-control">Description:</label>
+                        <label for="" class="form-control">Status:</label>
+                        <label for="" class="form-control">Created Date:</label>
+                        <label for="" class="form-control">Created_User:</label>
+                        <label for="" class="form-control">Updated:</label>
+                        <label for="" class="form-control">Update User:</label>
+                      </form>
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+            </td>
             <td>Description1</td>
             <td>Min Thant Kyaw</td>
             <td>2024/07/22</td>
-            <td><div class="button-group">
+            <td>
                 <a href="" class="btn btn-info">Edit</a>
-                <a href="" class="btn btn-danger">Delete</a>
-                </div>
+                <a  class="text-decoration-none btn btn-danger" href="" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Delete
+                  </a>
+
+                  <!-- Modal -->
+                  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="exampleModalLabel">User Details</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                                    <form action="" enctype="multipart/form-data">
+                                        @csrf
+                                        <label for="" class="form-control">Title:</label>
+                                        <label for="" class="form-control">Description:</label>
+                                        <label for="" class="form-control">Status:</label>
+                                        <label for="" class="form-control">Created Date:</label>
+                                        <label for="" class="form-control">Created_User:</label>
+                                        <label for="" class="form-control">Updated:</label>
+                                        <label for="" class="form-control">Update User:</label>
+                                      </form>
+
+
+                        </div>
+                        <div class="modal-footer">
+                          <a href="" class="btn btn-danger">Delete</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
             </td>
         </tr>
       </table>
 </div>
-
-
-
 </div>
 
 
