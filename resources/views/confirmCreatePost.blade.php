@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content')
     <div class="row">
-        <div class="col-6 mx-auto border border-dark py-3">
+        <div class="col-6 mx-auto border border-dark py-3 ">
         <div class="bg-success rounded-top">
             <h4>Create Post</h4>
         </div>

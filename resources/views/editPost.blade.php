@@ -2,7 +2,7 @@
 @section('content')
     <div class="row">
         <div class="col-6 mx-auto border border-dark py-3">
-        <div class="bg-success rounded-top">
+        <div class="bg-success rounded-top ">
             <h4>Edit Post</h4>
         </div>
         <div class="bg-light">
