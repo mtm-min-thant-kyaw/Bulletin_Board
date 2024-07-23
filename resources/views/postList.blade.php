@@ -36,7 +36,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">User Details</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Post Details</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -66,16 +66,16 @@
             <td>2024/07/22</td>
             <td>
                 <a href="" class="btn btn-info">Edit</a>
-                <a  class="text-decoration-none btn btn-danger" href="" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <a  class="text-decoration-none btn btn-danger" href="" data-bs-toggle="modal" data-bs-target="#delete">
                     Delete
                   </a>
 
                   <!-- Modal -->
-                  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal fade" id="delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h1 class="modal-title fs-5" id="exampleModalLabel">User Details</h1>
+                          <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure to delete?</h1>
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -93,7 +93,8 @@
 
                         </div>
                         <div class="modal-footer">
-                          <a href="" class="btn btn-danger">Delete</a>
+                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                         <a href="" class="btn btn-danger">Delete</a>
                         </div>
                       </div>
                     </div>
@@ -104,6 +105,4 @@
       </table>
 </div>
 </div>
-
-
 @endsection
