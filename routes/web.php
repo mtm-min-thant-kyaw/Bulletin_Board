@@ -37,3 +37,12 @@ Route::get('/user/edit/profile',function(){
 Route::get('user/profile',function(){
     return view('User.profile');
 });
+Route::get('password/change',function(){
+    return view('Password.changePassword');
+});
+Route::get('/password/forgot/',function(){
+    return view('Password.forgotPasswordUpdate');
+});
+Route::get('password/reset',function(){
+    return view('Password.forgotPassword');
+});
