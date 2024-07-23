@@ -81,7 +81,46 @@
       </div>
     </div>
   </div>
-                <a href="" class="btn btn-danger">Delete</a>
+
+  {{-- Delete Confirm Modal --}}
+  <a  class="btn btn-danger" href="" data-bs-toggle="modal" data-bs-target="#deleteModal">
+    Delete
+  </a>
+
+  <!-- Modal -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure to delete?</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+             <div class="row">
+                <div class="col-12">
+                    <form action="" enctype="multipart/form-data">
+                        @csrf
+                        <label for="" class="form-control">Name:</label>
+                        <label for="" class="form-control">Emial:</label>
+                        <label for="" class="form-control">Phone:</label>
+                        <label for="" class="form-control">Address</label>
+                        <label for="" class="form-control">Type:</label>
+                        <label for="" class="form-control">Created_User:</label>
+                        <label for="" class="form-control">Created_at:</label>
+                        <label for="" class="form-control">Update User:</label>
+                        <label for="" class="form-control">Updated_at:</label>
+                      </form>
+                </div>
+             </div>
+        </div>
+        <div class="modal-footer">
+            <a href="" class="btn btn-danger">Delete</a>
+          {{-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Delete</button> --}}
+
+        </div>
+      </div>
+    </div>
+  </div>
                </td>
 
         </tr>
