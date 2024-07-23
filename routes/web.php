@@ -31,3 +31,9 @@ Route::get('user/create/confirm',function(){
 Route::get('/user/list',function(){
     return view('User.userList');
 });
+Route::get('/user/edit/profile',function(){
+    return view('User.editProfile');
+});
+Route::get('user/profile',function(){
+    return view('User.profile');
+});
