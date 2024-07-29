@@ -10,17 +10,20 @@ Route::get('/login',function(){
     return view('login');
 });
 Route::get('/post/list',function(){
-    return view('postList');
+    return view('Posts.postList');
 });
 Route::get('/post/create',function(){
-    return view('createPost');
+    return view('Posts.createPost');
 });
 Route::get('/post/confirm',function(){
-    return view('confirmCreatePost');
+    return view('Posts.confirmCreatePost');
 });
 
 Route::get('/post/edit',function(){
-    return view('editPost');
+    return view('Posts.editPost');
+});
+Route::get('/post/csv/upload',function(){
+    return view('Posts.uploadPost');
 });
 Route::get('user/create',function(){
     return view('User.createUser');
