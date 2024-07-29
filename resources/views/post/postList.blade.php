@@ -10,7 +10,7 @@
     <input type="submit" value="Search" class="btn btn-success">
 </form>
 
-    <button class="btn btn-success">Create</button>
+    <a href="{{route('post.createPage')}}" class="btn btn-success">Create</a>
     <button class="btn btn-success">Upload</button>
     <button class="btn btn-success"> Download</button>
 

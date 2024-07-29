@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-6 mx-auto border border-dark py-3">
         <div class="bg-success rounded-top">
-            <h4>Register</h4>
+            <h4>Confirm To Create User</h4>
         </div>
         <div class="bg-light">
             <form action="">
@@ -22,7 +22,7 @@
 
 
                   </select>
-                  <label for="" class="my-2">Phone</label>
+                <label for="" class="my-2">Phone</label>
                 <input type="text" name="phone" class="form-control" disabled>
                 <label for="" class="my-2">Date Of Birth</label>
                 <input type="date" id="start" name="dob" value="" class="form-control" disabled>
@@ -32,7 +32,7 @@
                 <input type="file" name="profile" class="form-control" disabled>
                <div>
                 <input type="submit" value="Confirm" class="btn btn-success my-2">
-                <input type="submit" value="Cancel" class="btn btn-secondary my-2">
+                <input type="submit" value="Clear" class="btn btn-secondary my-2">
                </div>
 
             </form>
