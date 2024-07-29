@@ -1,51 +1,28 @@
 <?php
 
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', function () {
-    return view('login');
-});
-Route::get('/login',function(){
-    return view('login');
-});
-Route::get('/post/list',function(){
-    return view('Posts.postList');
-});
-Route::get('/post/create',function(){
-    return view('Posts.createPost');
-});
-Route::get('/post/confirm',function(){
-    return view('Posts.confirmCreatePost');
-});
+Route::get('/', [AuthController::class, 'loginPage'])->name('loginPage');
+Route::get('/login', [AuthController::class, 'loginPage'])->name('loginPage');
+Route::get('/register', [AuthController::class, 'registerPage'])->name('registerPage');
+Route::get('/login/user', [AuthController::class, 'loginUser']); //To compact login user
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/register', [AuthController::class, 'register'])->name('register');
+Route::get('/logout',[AuthController::class,'logout'])->name('logout');
 
-Route::get('/post/edit',function(){
-    return view('Posts.editPost');
-});
-Route::get('/post/csv/upload',function(){
-    return view('Posts.uploadPost');
-});
-Route::get('user/create',function(){
-    return view('User.createUser');
-});
-Route::get('user/create/confirm',function(){
-    return view('User.confirmCreateUser');
-});
-Route::get('/user/list',function(){
-    return view('User.userList');
-});
-Route::get('/user/edit/profile',function(){
-    return view('User.editProfile');
-});
-Route::get('user/profile',function(){
-    return view('User.profile');
-});
-Route::get('password/change',function(){
-    return view('Password.changePassword');
-});
-Route::get('/password/forgot/',function(){
-    return view('Password.forgotPasswordUpdate');
-});
-Route::get('password/reset',function(){
-    return view('Password.forgotPassword');
-});
+
+Route::get('/user/list', [UserController::class, 'userListPage'])->name('user.userlist');
+Route::get('/user/create', [UserController::class, 'userCreatePage'])->name('user.userCreatePage');
+Route::post('/user/create/',[UserController::class,'createUser'])->name('user.createUser');
+
+
+Route::get('user/profile', [ProfileController::class, 'profilePage'])->name('user.profilePage');
+Route::get('user/profile/edit', [ProfileController::class, 'profileEditPage'])->name('user.profileEdit');
+Route::get('/post/list', [PostController::class, 'postListPage'])->name('post.postlist');
+Route::get('/post/create',[PostController::class,'postCreatePage'])->name('post.createPage');
+Route::post('/post/create',[PostController::class,'postCreate'])->name('post.create');
