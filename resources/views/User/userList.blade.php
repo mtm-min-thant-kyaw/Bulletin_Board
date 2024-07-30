@@ -33,7 +33,7 @@
                         <td>{{ $index + 1 }}</td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
-                        <td>{{$user->created_user_id}}</td>
+                        <td>{{ $user->created_user_id }}</td>
                         <td>
                             @if ($user->type == 1)
                                 Admin

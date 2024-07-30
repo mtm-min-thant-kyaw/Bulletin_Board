@@ -9,12 +9,12 @@
                 <form action="{{ route('user.createUser') }}" method="POST" id="createUserForm">
                     @csrf
                     <label for="">Name</label>
-                    <input type="text" name="name" class="form-control" value="{{old('name')}}">
+                    <input type="text" name="name" class="form-control" value="{{ old('name') }}">
                     @error('name')
                         <small class="alert text-danger">{{ $message }}</small><br>
                     @enderror
                     <label for="" class="my-2">Email Address</label>
-                    <input type="text" name="email" class="form-control" value="{{old('email')}}">
+                    <input type="text" name="email" class="form-control" value="{{ old('email') }}">
                     @error('email')
                         <small class="alert text-danger">{{ $message }}</small><br>
                     @enderror
@@ -38,28 +38,29 @@
                     @endif
 
                     <label for="" class="my-2">Phone</label>
-                    <input type="text" name="phone" class="form-control" value="{{old('phone')}}">
+                    <input type="text" name="phone" class="form-control" value="{{ old('phone') }}">
                     @error('phone')
                         <small class="alert text-danger">{{ $message }}</small><br>
                     @enderror
                     <label for="" class="my-2">Date Of Birth</label>
-                    <input type="date" id="start" name="dob" value="" class="form-control" value="{{old('dob')}}">
+                    <input type="date" id="start" name="dob" value="" class="form-control"
+                        value="{{ old('dob') }}">
                     @error('dob')
                         <small class="alert text-danger">{{ $message }}</small><br>
                     @enderror
                     <label for="">Address</label>
-                    <input type="text" name="address" class="form-control" value="{{old('address')}}">
+                    <input type="text" name="address" class="form-control" value="{{ old('address') }}">
                     @error('address')
                         <small class="alert text-danger">{{ $message }}</small><br>
                     @enderror
                     <label for="">Profile</label>
-                    <input type="file" name="profile" class="form-control" value="{{old('profile')}}">
+                    <input type="file" name="profile" class="form-control" value="{{ old('profile') }}">
                     @error('profile')
                         <small class="alert text-danger">{{ $message }}</small><br>
                     @enderror
                     <div>
                         <input type="submit" value="Register" class="btn btn-success my-2">
-                       <button type="buuton" class="btn btn-primary" onclick="resetForm();">Clear</button>
+                        <button type="buuton" class="btn btn-primary" onclick="resetForm();">Clear</button>
                     </div>
 
                 </form>
@@ -70,5 +71,5 @@
         function resetForm() {
             document.getElementById("createUserForm").reset();
         }
-        </script>
+    </script>
 @endsection

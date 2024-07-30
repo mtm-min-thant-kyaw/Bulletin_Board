@@ -24,43 +24,49 @@
                     <form action="{{ route('register') }}" method="post">
                         @csrf
                         <label for="">Name</label>
-                        <input type="text" name="name" class="form-control" value="{{old('name')}}">
+                        <input type="text" name="name" class="form-control" value="{{ old('name') }}">
                         @error('name')
                             <small class="alert text-danger">{{ $message }}</small><br>
                         @enderror
                         <label for="" class="my-2">Email Address</label>
-                        <input type="text" name="email" class="form-control" value="{{old('email')}}>
+                        <input type="text" name="email" class="form-control"
+                            value="{{ old('email') }}>
                         @error('email')
-                            <small class="alert text-danger">{{ $message }}</small><br>
-                        @enderror
-                        <label for="" class="my-2">Password</label>
-                        <input type="password" name="password" class="form-control">
-                        @error('password')
-                            <small class="alert text-danger">{{ $message }}</small><br>
-                        @enderror
-                        <label for="" class="my-2">Password Confirmation</label>
-                        <input type="password" name="password_confirmation" class="form-control">
-                        @error('password')
-                            <small class="alert text-danger">{{ $message }}</small><br>
-                        @enderror
-                        <input type="text" hidden name="type">
-                        <label for="" class="my-2">Phone</label>
-                        <input type="text" name="phone" class="form-control" value="{{old('phone')}}>
+<small class="alert
+                            text-danger">{{ $message }}</small><br>
+                    @enderror
+                    <label for="" class="my-2">Password</label>
+                    <input type="password" name="password" class="form-control">
+                    @error('password')
+                        <small class="alert text-danger">{{ $message }}</small><br>
+                    @enderror
+                    <label for="" class="my-2">Password Confirmation</label>
+                    <input type="password" name="password_confirmation" class="form-control">
+                    @error('password')
+                        <small class="alert text-danger">{{ $message }}</small><br>
+                    @enderror
+                    <input type="text" hidden name="type">
+                    <label for="" class="my-2">Phone</label>
+                    <input type="text" name="phone" class="form-control"
+                        value="{{ old('phone') }}>
                         @error('phone')
-                            <small class="alert text-danger">{{ $message }}</small><br>
-                        @enderror
-                        <label for="">Address</label>
-                        <input type="text" name="address" class="form-control" value="{{old('address')}}>
+<small class="alert
+                        text-danger">{{ $message }}</small><br>
+                @enderror
+                <label for="">Address</label>
+                <input type="text" name="address" class="form-control"
+                    value="{{ old('address') }}>
                         @error('address')
-                            <small class="alert text-danger">{{ $message }}</small><br>
-                        @enderror
-                        <input type="submit" value="Register" class="btn btn-success my-2">
-                        <a href="{{ route('loginPage') }}">Do you have an account?LoginHere</a>
-                    </form>
-                </div>
-            </div>
-        </div>
+<small class="alert
+                    text-danger">{{ $message }}</small><br>
+            @enderror
+            <input type="submit" value="Register" class="btn btn-success my-2">
+            <a href="{{ route('loginPage') }}">Do you have an account?LoginHere</a>
+        </form>
     </div>
+</div>
+</div>
+</div>
 </body>
 <!-- Bootstrap Js Link -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
