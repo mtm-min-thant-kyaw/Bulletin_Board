@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.app')
 @section('content')
     <div class="row border border-dark">
         <div class="col-12 bg-success rounded">

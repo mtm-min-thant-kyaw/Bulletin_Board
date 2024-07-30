@@ -56,6 +56,7 @@
             </div>
         </div>
     </nav>
+<<<<<<< HEAD:resources/views/layouts/master.blade.php
     <div class="container">
         @yield('content')
     </div>
@@ -65,6 +66,8 @@
         <h3 class="text-success">Copyright © Seattle Consulting
             Myanmar Co., Ltd. All rights reserved.</h3>
     </div>
+=======
+>>>>>>> User_Crud_Action:resources/views/layouts/common/header.blade.php
 </body>
 <!-- Bootstrap Js Link -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

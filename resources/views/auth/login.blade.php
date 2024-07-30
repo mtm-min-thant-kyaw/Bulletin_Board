@@ -45,8 +45,8 @@
                     <form action="{{ route('login') }}" method="POST">
                         @csrf
                         <label for="">Email Address</label>
-                        <input type="text" name="email" id="" value="{{old('email')}}" placeholder="Enter Emial Address"
-                            class="form-control">
+                        <input type="text" name="email" id="" value="{{ old('email') }}"
+                            placeholder="Enter Emial Address" class="form-control">
 
                         <label for="">Password</label>
                         <input type="password" name="password" id="" placeholder="Enter Password"

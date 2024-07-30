@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.app')
 @section('content')
     <div class="row">
         <div class="col-8 bg-success rounded  mx-auto">
