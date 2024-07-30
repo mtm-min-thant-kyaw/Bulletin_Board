@@ -15,39 +15,33 @@
 
 <body>
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="delete" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure to delete?</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form action="" enctype="multipart/form-data">
-                                            @csrf
-                                            <label for="" class="form-control">Title:</label>
-                                            <label for="" class="form-control">Description:</label>
-                                            <label for="" class="form-control">Status:</label>
-                                            <label for="" class="form-control">Created Date:</label>
-                                            <label for="" class="form-control">Created_User:</label>
-                                            <label for="" class="form-control">Updated:</label>
-                                            <label for="" class="form-control">Update User:</label>
-                                        </form>
-
-
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Close</button>
-                                        <a href="" class="btn btn-danger">Delete</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+    <!-- Modal -->
+    <div class="modal fade" id="delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure to delete?</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="" enctype="multipart/form-data">
+                        @csrf
+                        <label for="" class="form-control">Title:</label>
+                        <label for="" class="form-control">Description:</label>
+                        <label for="" class="form-control">Status:</label>
+                        <label for="" class="form-control">Created Date:</label>
+                        <label for="" class="form-control">Created_User:</label>
+                        <label for="" class="form-control">Updated:</label>
+                        <label for="" class="form-control">Update User:</label>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <!-- Bootstrap Js Link -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
