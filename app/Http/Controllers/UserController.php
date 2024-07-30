@@ -32,10 +32,10 @@ class UserController extends Controller
      */
     public function createUser(RegisterRequest $request)
     {
-        try{
+        try {
             $user = $this->registerService->registerUser($request->validated());
-            return redirect()->route('user.userlist')->with('success','User Created Successfully');
-        }catch(\Exception $e){
+            return redirect()->route('user.userlist')->with('success', 'User Created Successfully');
+        } catch (\Exception $e) {
             return redirect()->back()->withErrors($e->getMessage())->withInput();
         }
     }

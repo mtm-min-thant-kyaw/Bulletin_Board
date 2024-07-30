@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.app')
 @section('content')
     <div class="row">
         <div class="col-6 mx-auto border border-dark py-3">
@@ -12,7 +12,7 @@
                 <label for="" class="my-2">Description</label>
                 <input type="text" name="description" class="form-control">
                <div>
-                <input type="submit" value="Create" class="btn btn-success my-2">
+                <a href="" class="btn btn-success">Create</a>
                 <input type="submit" value="Cancel" class="btn btn-secondary my-2">
                </div>
 
