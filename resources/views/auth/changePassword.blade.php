@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.app')
 @section('content')
     <div class="row">
 
@@ -14,4 +14,5 @@
                 <button type="submit" class="btn btn-success mt-2">Update</button>
             </form>
         </div>
+    </div>
     @endsection

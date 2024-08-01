@@ -31,6 +31,7 @@
                         <label for="" class="my-2">Email Address</label>
                         <input type="text" name="email" class="form-control"
                             value="{{ old('email') }}>
+                        <input type="text" name="email" class="form-control" value="{{ old('email') }}">
                         @error('email')
 <small class="alert
                             text-danger">{{ $message }}</small><br>
