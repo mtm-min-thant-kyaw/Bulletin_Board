@@ -28,7 +28,7 @@ class PostCreateRequest extends FormRequest
     }
     public function messages(): array
     {
-        return[
+        return [
             'title.requried' => 'Title is require.',
             'title.max' => 'Maximum limit is 255 characters.',
             'body.required' => 'Body field is required',

@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
+
 class AuthController extends Controller
 {
     public function loginPage()
@@ -43,13 +44,13 @@ class AuthController extends Controller
      */
     public function register(RegisterRequest $request)
     {
-        // try {
+        try {
             $user = $this->registerService->registerUser($request->validated());
             Auth::login($user);
             return redirect()->route('loginPage')->with('success', 'Register Success.Login Again.');
-        // } catch (\Exception $e) {
-        //     return redirect()->back()->withErrors($e->getMessage())->withInput();
-        // }
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage())->withInput();
+        }
     }
 
 
@@ -58,7 +59,7 @@ class AuthController extends Controller
      * @param \App\Http\Requests\LoginRequest $request
      * @return mixed|\Illuminate\Http\RedirectResponse
      */
-    public function login(LoginRequest $request) : RedirectResponse
+    public function login(LoginRequest $request): RedirectResponse
     {
 
         try {
@@ -77,10 +78,10 @@ class AuthController extends Controller
     public function logout()
     {
         $data = array();
-        if(Session::has('loginId')){
+        if (Session::has('loginId')) {
             Session::pull('loginId');
 
-        return redirect()->route('loginPage');
+            return redirect()->route('loginPage');
+        }
     }
-}
 }

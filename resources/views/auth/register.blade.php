@@ -31,8 +31,7 @@
                         <label for="" class="my-2">Email Address</label>
                         <input type="text" name="email" class="form-control" value="{{ old('email') }}">
                         @error('email')
-                            <small class="alert
-                            text-danger">{{ $message }}</small><br>
+                            <small class="alert text-danger">{{ $message }}</small><br>
                         @enderror
                         <label for="" class="my-2">Password</label>
                         <input type="password" name="password" class="form-control">
@@ -48,14 +47,12 @@
                         <label for="" class="my-2">Phone</label>
                         <input type="text" name="phone" class="form-control" value="{{ old('phone') }}">
                         @error('phone')
-                            <small class="alert
-                        text-danger">{{ $message }}</small><br>
+                            <small class="alert text-danger">{{ $message }}</small><br>
                         @enderror
                         <label for="">Address</label>
                         <input type="text" name="address" class="form-control" value="{{ old('address') }}">
                         @error('address')
-                            <small class="alert
-                    text-danger">{{ $message }}</small><br>
+                            <small class="alert text-danger">{{ $message }}</small><br>
                         @enderror
                         <input type="submit" value="Register" class="btn btn-success my-2">
                         <a href="{{ route('loginPage') }}">Do you have an account?LoginHere</a>

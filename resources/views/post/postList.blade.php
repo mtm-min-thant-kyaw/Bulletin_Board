@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
-@include('layouts.modals.postDetailModal')
-@include('layouts.modals.postDeleteModal')
+    @include('layouts.modals.postDetailModal')
+    @include('layouts.modals.postDeleteModal')
     <div class="row border border-dark">
         <div class="col-12 bg-success rounded">
             <h3>Post List</h3>
@@ -15,7 +15,6 @@
             <a href="{{ route('post.createPage') }}" class="btn btn-success">Create</a>
             <button class="btn btn-success">Upload</button>
             <button class="btn btn-success"> Download</button>
-
         </div>
         <div class="col-12">
             <table class="table table-striped">
@@ -48,6 +47,4 @@
             </table>
         </div>
     </div>
-
-
 @endsection

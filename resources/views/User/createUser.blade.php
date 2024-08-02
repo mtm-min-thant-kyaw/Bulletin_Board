@@ -1,7 +1,6 @@
 @include('layouts.common.header')
 @extends('layouts.app')
 @section('content')
-
     <div class="row">
         <div class="col-6 mx-auto border border-dark py-3">
             <div class="bg-success shadow">
@@ -30,7 +29,6 @@
                     @error('password')
                         <small class="alert text-danger">{{ $message }}</small><br>
                     @enderror
-
                     @if (Auth::check() && Auth::user()->type == 1)
                         <label for="" class="my-2">Type</label>
                         <select name="type" class="form-select" id="type" aria-label="Default select example">
@@ -38,7 +36,6 @@
                             <option value="1">Admin</option>
                         </select>
                     @endif
-
                     <label for="" class="my-2">Phone</label>
                     <input type="text" name="phone" class="form-control" value="{{ old('phone') }}">
                     @error('phone')
