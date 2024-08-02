@@ -11,14 +11,14 @@ class UserController extends Controller
 {
     public function userListPage()
     {
-        $users = User::latest()->paginate(4);
+        $users = User::with('createUser')->latest()->paginate(4);
         return view('user.userList', compact('users'));
     }
     public function userCreatePage()
     {
-        return view('user.createUser');
+        $type =  ["user" => 0, "admin" => 1];
+        return view('user.createUser', compact('type'));
     }
-
     protected $registerService;
 
     public function __construct(RegisterService $registerService)
@@ -30,8 +30,9 @@ class UserController extends Controller
      * @param \App\Http\Requests\RegisterRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function createUser(RegisterRequest $request)
+    public function store(RegisterRequest $request)
     {
+        dd($this->registerService->registerUser($request));
         try {
             $user = $this->registerService->registerUser($request->validated());
             return redirect()->route('user.userlist')->with('success', 'User Created Successfully');

@@ -1,3 +1,4 @@
+@include('layouts.common.header')
 @extends('layouts.app')
 @section('content')
     <div class="row border border-dark">
@@ -44,98 +45,23 @@
                         <td>{{ $user->phone }}</td>
                         <td>{{ $user->dob }}</td>
                         <td>{{ $user->address }}</td>
-                        <td>{{ $user->created_at }}</td>
+                        <td>{{ $user->created_at->diffForHumans() }}</td>
                         <td>{{ $user->updated_at }}</td>
                         <td>
-                            <!-- Button trigger modal -->
-                            <a class="btn btn-primary" href="" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                Details
-                            </a>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                                aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">User Details</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col-4">
-                                                    <img src="" alt="User's Photo">
-                                                </div>
-                                                <div class="col-8">
-                                                    <form action="" enctype="multipart/form-data">
-                                                        @csrf
-                                                        <label for="" class="form-control">Name:</label>
-                                                        <label for="" class="form-control">Emial:</label>
-                                                        <label for="" class="form-control">Phone:</label>
-                                                        <label for="" class="form-control">Address</label>
-                                                        <label for="" class="form-control">Type:</label>
-                                                        <label for="" class="form-control">Created_User:</label>
-                                                        <label for="" class="form-control">Created_at:</label>
-                                                        <label for="" class="form-control">Update User:</label>
-                                                        <label for="" class="form-control">Updated_at:</label>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Close</button>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {{-- Delete Confirm Modal --}}
-                            <a class="btn btn-danger" href="" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                                Delete
-                            </a>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                                aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure to delete?</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <form action="" enctype="multipart/form-data">
-                                                        @csrf
-                                                        <label for="" class="form-control">Name:</label>
-                                                        <label for="" class="form-control">Emial:</label>
-                                                        <label for="" class="form-control">Phone:</label>
-                                                        <label for="" class="form-control">Address</label>
-                                                        <label for="" class="form-control">Type:</label>
-                                                        <label for="" class="form-control">Created_User:</label>
-                                                        <label for="" class="form-control">Created_at:</label>
-                                                        <label for="" class="form-control">Update User:</label>
-                                                        <label for="" class="form-control">Updated_at:</label>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <a href="" class="btn btn-danger">Delete</a>
-                                            {{-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Delete</button> --}}
-
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="d-flex">
+                                <a class="btn btn-primary" href="" data-bs-toggle="modal"
+                                    data-bs-target="#detailModal">
+                                    Details
+                                </a>
+                                <a class="btn btn-danger" href="" data-bs-toggle="modal"
+                                    data-bs-target="#deleteModal">
+                                    Delete
+                                </a>
                             </div>
                         </td>
-
                     </tr>
+                    @include('layouts.modals.userDetailModal')
+                    @include('layouts.modals.userDeleteModal')
                 @endforeach
             </table>
             {{ $users->links() }}

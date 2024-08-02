@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    @include('layouts.common.header')
+
     <div class="container">
         @yield('content')
     </div>

@@ -1,3 +1,4 @@
+@include('layouts.common.header')
 @extends('layouts.app')
 @section('content')
     <div class="row">
@@ -20,7 +21,7 @@
                 <input type="text" name=""
                     value="{{ $authUser->type == 1 ? 'Admin' : 'User' }}"class="form-control" disabled>
                 @if ($authUser->profile)
-                    <img src="{{ asset('storage/' . $user->profile) }}" alt="Profile Photo"
+                    <img src="{{ asset('storage/' . $authUser->profile) }}" alt="Profile Photo"
                         class="img-fluid rounded-circle">
                 @else
                     <img src="{{ asset('images/default_photo.png') }}" alt="Profile Photo"

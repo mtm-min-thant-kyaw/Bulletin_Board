@@ -19,4 +19,9 @@ class ProfileController extends Controller
         $user = Auth::user();
         return view('user.editProfile', compact('user'));
     }
+
+    public function profileEditConfirmPage(): View
+    {
+        return view('user.editProfileConfirm', compact('$user'));
+    }
 }

@@ -43,13 +43,13 @@ class AuthController extends Controller
      */
     public function register(RegisterRequest $request)
     {
-        try {
+        // try {
             $user = $this->registerService->registerUser($request->validated());
-
+            Auth::login($user);
             return redirect()->route('loginPage')->with('success', 'Register Success.Login Again.');
-        } catch (\Exception $e) {
-            return redirect()->back()->withErrors($e->getMessage())->withInput();
-        }
+        // } catch (\Exception $e) {
+        //     return redirect()->back()->withErrors($e->getMessage())->withInput();
+        // }
     }
 
 

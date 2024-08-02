@@ -1,12 +1,14 @@
+@include('layouts.common.header')
 @extends('layouts.app')
 @section('content')
+
     <div class="row">
         <div class="col-6 mx-auto border border-dark py-3">
             <div class="bg-success shadow">
                 <h4>Register</h4>
             </div>
             <div class="bg-light">
-                <form action="{{ route('user.createUser') }}" method="POST" id="createUserForm">
+                <form action="{{ route('user.add') }}" method="POST" id="createUserForm" enctype="multipart/form-data">
                     @csrf
                     <label for="">Name</label>
                     <input type="text" name="name" class="form-control" value="{{ old('name') }}">
