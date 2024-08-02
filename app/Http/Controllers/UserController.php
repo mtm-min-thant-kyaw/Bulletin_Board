@@ -11,7 +11,8 @@ class UserController extends Controller
 {
     public function userListPage()
     {
-        $users = User::latest()->paginate(4);
+        $user = Auth::user();
+        $users = User::with('user')->latest()->paginate(4);
         return view('user.userList', compact('users'));
     }
     public function userCreatePage()

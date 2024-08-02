@@ -37,9 +37,13 @@ class User extends Authenticatable
     /**
      * Define a one-to-many relationship with Post.
      */
-    public function posts()
+    public function post()
     {
         return $this->hasMany(Post::class, 'created_user_id');
+    }
+    public function user(){
+
+        return $this->hasMany(User::class, 'created_user_id');
     }
 
     /**

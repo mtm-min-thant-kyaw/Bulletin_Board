@@ -1,5 +1,7 @@
 @extends('layouts.app')
+@include('layouts.common.header')
 @section('content')
+
     <div class="row">
         <div class="col-8 bg-success rounded  mx-auto">
             <h3 class="">Profile</h3>

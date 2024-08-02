@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
+
 
 class Post extends Model
 {
@@ -20,12 +22,12 @@ class Post extends Model
     ];
 
     // Define relationship to the User model for created, updated, and deleted users
-    public function createdBy()
+    public function user()
     {
         return $this->belongsTo(User::class, 'created_user_id');
     }
 
-    public function updatedBy()
+    public function updateUser()
     {
         return $this->belongsTo(User::class, 'updated_user_id');
     }
@@ -33,5 +35,24 @@ class Post extends Model
     public function deletedBy()
     {
         return $this->belongsTo(User::class, 'deleted_user_id');
+    }
+
+    public  function search($searchTerm)
+    {
+        $user = Auth::user();
+        $query = Post::query();
+
+        if ($user->type != 1) {
+            $query->where('created_user_id', $user->id);
+        }
+        if ($searchTerm) {
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('title', 'LIKE', "%{$searchTerm}%")
+                    ->orWhere('body', 'LIKE', "%{$searchTerm}%");
+            });
+        }
+
+        $post = $query->with('user','updateUser')->latest()->paginate(5);
+        return $post;
     }
 }

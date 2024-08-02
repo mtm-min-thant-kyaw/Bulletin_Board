@@ -7,16 +7,13 @@
     <!-- Bootstrap CSS Link -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    {{-- Font awaesome CDN Link --}}
-    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
     <title>Bulletin Board OJT</title>
 </head>
 
 <body>
 
     <!-- Modal -->
-    <div class="modal fade" id="delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteModal{{ $post->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -24,20 +21,37 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="" enctype="multipart/form-data">
-                        @csrf
-                        <label for="" class="form-control">Title:</label>
-                        <label for="" class="form-control">Description:</label>
-                        <label for="" class="form-control">Status:</label>
-                        <label for="" class="form-control">Created Date:</label>
-                        <label for="" class="form-control">Created_User:</label>
-                        <label for="" class="form-control">Updated:</label>
-                        <label for="" class="form-control">Update User:</label>
-                    </form>
+                    <div class="row">
+                        <div class="col-6">
+
+                            <h4>Title</h4>
+                            <h4 class="form-control">{{ $post->title }}</h4>
+                            <h4>Status</h4>
+                            <h4 class="form-control">Active</h4>
+                            <h4>Created_at</h4>
+                            <h4 class="form-control">{{ $post->created_at->diffForHumans() }}</h4>
+                            <h4>Created_User</h4>
+                            <h4 class="form-control">{{ $post->user->name }}</h4>
+                            <h4>Updated_at</h4>
+                            <h4 class="form-control">{{ $post->updated_at }}</h4>
+                            <h4>Updated_User</h4>
+                            <h4 class="form-control">{{ $post->updateUser->name }}</h4>
+                        </div>
+                        <div class="col-6">
+                            <h4>Description</h4>
+                            <textarea class="form-control" rows="10">{{ $post->body }}</textarea>
+
+                        </div>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <a href="" class="btn btn-danger">Delete</a>
+                    <form action="{{ route('post.destroy', $post->id) }}" method="get">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
                 </div>
             </div>
         </div>

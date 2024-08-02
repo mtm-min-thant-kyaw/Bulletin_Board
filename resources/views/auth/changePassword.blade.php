@@ -1,7 +1,6 @@
 @extends('layouts.master')
 @section('content')
     <div class="row">
-
         <div class="col-6 bg-light mx-auto my-2 border border-dark py-3">
             <h3 class="">Change Password</h3>
             <form action="">

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('created_user_id');
             $table->unsignedBigInteger('updated_user_id')->nullable();
             $table->unsignedBigInteger('deleted_user_id')->nullable();
-            $table->dateTime('deleted_at')->nullable();
+            $table->softDeletes();
             $table->timestamps();
             $table->foreign('created_user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('updated_user_id')->references('id')->on('users')->cascadeOnUpdate();

@@ -26,8 +26,4 @@ class LoginService
 
         return Auth::user();
     }
-    public function logoutUser()
-    {
-        return Auth::logout();
-    }
 }

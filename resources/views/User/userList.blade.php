@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@include('layouts.common.header')
 @section('content')
     <div class="row border border-dark">
         <div class="col-12 bg-success rounded">
@@ -44,8 +45,8 @@
                         <td>{{ $user->phone }}</td>
                         <td>{{ $user->dob }}</td>
                         <td>{{ $user->address }}</td>
-                        <td>{{ $user->created_at }}</td>
-                        <td>{{ $user->updated_at }}</td>
+                        <td>{{ $user->created_at->diffForHumans() }}</td>
+                        <td>{{ $user->updated_at->diffForHumans() }}</td>
                         <td>
                             <!-- Button trigger modal -->
                             <a class="btn btn-primary" href="" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -103,7 +104,8 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure to delete?</h1>
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure to delete?
+                                            </h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
@@ -119,7 +121,8 @@
                                                         <label for="" class="form-control">Type:</label>
                                                         <label for="" class="form-control">Created_User:</label>
                                                         <label for="" class="form-control">Created_at:</label>
-                                                        <label for="" class="form-control">Update User:</label>
+                                                        <label for="" class="form-control">Update
+                                                            User:</label>
                                                         <label for="" class="form-control">Updated_at:</label>
                                                     </form>
                                                 </div>

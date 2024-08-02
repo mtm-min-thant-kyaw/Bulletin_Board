@@ -17,7 +17,7 @@ class RegisterService
         $user->password = Hash::make($data['password']);
         $user->phone = $data['phone'];
         $user->address = $data['address'] ?? null;
-        $user->type = $data['type'] ?? 0;
+        $user->type = $data['type'] ?? 1;
         if (isset($data['dob'])) {
             $user->dob = Carbon::parse(($data['dob']));
         }
