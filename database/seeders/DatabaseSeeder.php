@@ -27,6 +27,8 @@ class DatabaseSeeder extends Seeder
                 'address' => 'Kanbalu',
                 'type' => '1', //Admin
                 'dob' => '2000-10-10',
+                'created_user_id' => '1',
+                'updated_user_id' => '1',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
 
