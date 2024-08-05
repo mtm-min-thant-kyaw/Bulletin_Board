@@ -6,24 +6,32 @@
         <div class="col-12 bg-success rounded">
             <h3>Post List</h3>
         </div>
+        @if (session('success'))
+        <div class="">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fa-solid fa-check"></i> {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    @endif
         <div class=" offset-1 col-10 d-flex justify-content-between my-3">
             <form action="{{ route('post.postlist') }}" method="GET" class="form d-flex">
                 Keyword::<input type="text" name="searchKey" class="form-control me-2" value="{{old('name')}}">
                 <input type="submit" value="Search" class="btn btn-success">
             </form>
             <a href="{{ route('post.createPage') }}" class="btn btn-success">Create</a>
-            <button class="btn btn-success">Upload</button>
-            <button class="btn btn-success"> Download</button>
+            <form action="{{ route('post.upload') }}" method="POST" enctype="multipart/form-data" class="d-flex">
+                @csrf
+                <input type="file" name="csv_file" id="csv_file" class="form-control">
+                <button type="submit" class="btn btn-success">Upload</button>
+            </form>
+            <form action="">
+                <a href="{{ route('post.download', ['searchKey' => $searchTerm]) }}" class="btn btn-success">Download
+                    Excel</a>
+            </form>
         </div>
         <div class="col-12">
-            @if (session('success'))
-                <div class="">
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <i class="fa-solid fa-check"></i> {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                </div>
-            @endif
+
             <table class="table table-striped">
                 <tr class="table-primary">
                     <th>Post Title</th>

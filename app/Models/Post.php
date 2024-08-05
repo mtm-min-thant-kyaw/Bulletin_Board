@@ -27,7 +27,7 @@ class Post extends Model
         return $this->belongsTo(User::class, 'created_user_id');
     }
 
-    public function updateUser()
+    public function updateuser()
     {
         return $this->belongsTo(User::class, 'updated_user_id');
     }
@@ -52,7 +52,7 @@ class Post extends Model
             });
         }
 
-        $post = $query->with('user','updateUser')->latest()->paginate(5);
+        $post = $query->with('user','updateuser')->latest()->paginate(5);
         return $post;
     }
 }

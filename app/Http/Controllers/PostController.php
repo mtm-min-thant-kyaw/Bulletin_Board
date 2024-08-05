@@ -20,7 +20,6 @@ class PostController extends Controller
      */
     public function postListPage(Request $request)
     {
-
         $searchTerm = $request->input('searchKey');
         $post = new Post();
         $posts = $post->search($searchTerm);
@@ -113,5 +112,86 @@ class PostController extends Controller
         }
 
         return redirect()->route('post.postlist')->with('success', 'Post deleted successfully.');
+    }
+
+    public function uploadCsv(Request $request)
+    {
+        if ($request->hasFile('csv_file')) {
+            $file = $request->file('csv_file');
+            $csvData = file_get_contents($file);
+            $rows = array_map('str_getcsv', explode("\n", $csvData));
+            $header = array_shift($rows);
+
+            foreach ($rows as $row) {
+                if (count($header) == count($row)) {
+                    $row = array_combine($header, $row);
+                    Post::create([
+                        'title' => $row['title'],
+                        'body' => $row['body'],
+                        'created_user_id' => Auth::user()->id,
+                    ]);
+                }
+            }
+        }else{
+            return redirect()->back()->with('success','Please Select Csv File');
+        }
+
+        return redirect()->route('post.postlist')->with('success', 'CSV data uploaded successfully.');
+    }
+
+    public function downloadExcel(Request $request)
+    {
+        $user = Auth::user();
+        $searchTerm = $request->input('searchKey');
+
+        $query = Post::query();
+
+        if ($user->type != 1) {
+            $query->where('created_user_id', $user->id);
+        }
+
+        if ($searchTerm) {
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('title', 'LIKE', "%{$searchTerm}%")
+                    ->orWhere('body', 'LIKE', "%{$searchTerm}%");
+            });
+        }
+
+        $posts = $query->get();
+
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Add headers
+        $sheet->setCellValue('A1', 'ID');
+        $sheet->setCellValue('B1', 'Title');
+        $sheet->setCellValue('C1', 'Body');
+        $sheet->setCellValue('D1', 'Created User ID');
+        $sheet->setCellValue('E1', 'Created At');
+
+        // Add data rows
+        $row = 2;
+        foreach ($posts as $post) {
+            $sheet->setCellValue('A' . $row, $post->id);
+            $sheet->setCellValue('B' . $row, $post->title);
+            $sheet->setCellValue('C' . $row, $post->body);
+            $sheet->setCellValue('D' . $row, $post->created_user_id);
+            $sheet->setCellValue('E' . $row, $post->created_at);
+            $row++;
+        }
+
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+
+        $filename = 'Post-List.xlsx';
+        return response()->stream(
+            function () use ($writer) {
+                $writer->save('php://output');
+            },
+            200,
+            [
+                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+            ]
+        );
     }
 }

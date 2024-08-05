@@ -34,12 +34,10 @@
                             <h4 class="form-control">{{ $post->user->name }}</h4>
                             <h4>Updated_at</h4>
                             <h4 class="form-control">{{ $post->updated_at }}</h4>
-                            <h4>Updated_User</h4>
-                            <h4 class="form-control">{{ $post->updateUser->name }}</h4>
                         </div>
                         <div class="col-6">
                             <h4>Description</h4>
-                            <textarea class="form-control" rows="10">{{ $post->body }}</textarea>
+                            <textarea class="form-control" rows="10" disabled>{{ $post->body }}</textarea>
 
                         </div>
                     </div>

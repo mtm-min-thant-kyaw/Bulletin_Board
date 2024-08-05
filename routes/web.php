@@ -32,4 +32,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/post/edit{id}', [PostController::class, 'postEditPage'])->name('post.edit');
     Route::post('/post/update/page', [PostController::class, 'postEditConfirmPage'])->name('post.editConfirmPage');
     Route::get('post/delete{id}', [PostController::class, 'destroy'])->name('post.destroy');
+
+    //Csv upload and download search result as excel file
+    Route::post('/posts/upload', [PostController::class, 'uploadCsv'])->name('post.upload');
+    Route::get('/posts/download', [PostController::class, 'downloadExcel'])->name('post.download');
 });
