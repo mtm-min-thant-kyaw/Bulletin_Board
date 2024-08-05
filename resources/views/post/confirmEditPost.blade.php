@@ -18,7 +18,6 @@
                         <input type="submit" value="Update" class="btn btn-success my-2">
                         {{-- //Return back to edit post page --}}
                         <input type="submit" value="Cancel" class="btn btn-secondary my-2">
-
                 </form>
             </div>
         </div>
