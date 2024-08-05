@@ -46,7 +46,7 @@
                         <td>{{ $user->dob }}</td>
                         <td>{{ $user->address }}</td>
                         <td>{{ $user->created_at->diffForHumans() }}</td>
-                        <td>{{ $user->updated_at->diffForHumans() }}</td>
+                        <td>{{ $user->updated_at}}</td>
                         <td>
                             <!-- Button trigger modal -->
                             <a class="btn btn-primary" href="" data-bs-toggle="modal" data-bs-target="#exampleModal">
