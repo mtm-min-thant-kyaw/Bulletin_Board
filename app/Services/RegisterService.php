@@ -23,20 +23,18 @@ class RegisterService
         }
 
         // Handle file upload for profile
-        if ($data['profile']) {
+        if (isset($data['profile'])) {
             $fileName = uniqid() . $data['profile']->getClientOriginalName();
             $data['profile']->storeAs('public', $fileName);
             $user['profile'] = $fileName;
-
         }
 
 
-        $user->created_user_id = Auth::id()?? null;
+        $user->created_user_id = Auth::id() ?? null;
         $user->updated_user_id = Auth::id() ?? null;
         $user->deleted_user_id = null;
         $user->save();
 
         return $user;
     }
-
 }

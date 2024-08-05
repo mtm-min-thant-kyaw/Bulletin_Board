@@ -42,7 +42,8 @@ class User extends Authenticatable
         return $this->hasMany(Post::class, 'created_user_id');
     }
 
-    public function createUser(){
+    public function createUser()
+    {
         return $this->belongsTo(User::class, 'created_user_id');
     }
 
