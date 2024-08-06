@@ -69,7 +69,7 @@ class AuthController extends Controller
             if ($user->type == 1) {
                 return redirect()->route('user.userlist');
             } else {
-                return redirect()->route('post.postlist');
+                return redirect()->route('user.userlist');
             }
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();

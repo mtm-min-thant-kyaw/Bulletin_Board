@@ -11,11 +11,11 @@
 </head>
 
 <body>
-    <div class="container-fluid d-flex justify-content-between bg-light my-3">
+    <footer class="container-fluid d-flex justify-content-between bg-light my-3 fixed-bottom">
         <h3><a href="http://seattleconsultingmyanmar.com" class=" text-decoration-none text-success">Seattle Consulting
                 Myanmar</a></h3>
         <h3 class="text-success">Copyright © MetaTeam Myanmar Co., Ltd. All rights reserved.</h3>
-    </div>
+    </footer>
 </body>
 <!-- Bootstrap Js Link -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

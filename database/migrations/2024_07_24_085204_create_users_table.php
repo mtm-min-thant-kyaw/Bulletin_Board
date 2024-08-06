@@ -21,8 +21,8 @@ return new class extends Migration
             $table->integer('type')->default(0);
             $table->date('dob')->nullable();
             $table->string('profile')->nullable();
-            $table->unsignedBigInteger('created_user_id')->nullable();
-            $table->unsignedBigInteger('updated_user_id')->nullable();
+            $table->unsignedBigInteger('created_user_id');
+            $table->unsignedBigInteger('updated_user_id');
             $table->unsignedBigInteger('deleted_user_id')->nullable();
             $table->dateTime('deleted_at')->nullable();
             $table->timestamps();

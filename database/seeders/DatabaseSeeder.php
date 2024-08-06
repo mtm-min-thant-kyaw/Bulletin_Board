@@ -6,9 +6,6 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Carbon;
-
-
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -16,7 +13,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
         DB::table('users')->insert(
             [
                 'name' => 'Min Thant Kyaw',
@@ -26,8 +22,8 @@ class DatabaseSeeder extends Seeder
                 'address' => 'Kanbalu',
                 'type' => '1',
                 'dob' => '2000-10-10',
-                'created_at' => Carbon::now(),
-
+                'created_user_id' => '1',
+                'updated_user_id' => '1',
             ]
         );
     }

@@ -28,12 +28,8 @@ class RegisterRequest extends FormRequest
             'phone' => 'required|max:15|unique:users',
             'address' => 'max:255',
             'dob' => 'nullable',
-            // 'profile' => 'nullable|mimes:jpg,jpeg,png',
-
         ];
     }
-
-
     public function messages()
     {
         return [
@@ -47,7 +43,6 @@ class RegisterRequest extends FormRequest
             'password.min' => 'The password must be at least 8 characters.',
             'password.confirmed' => 'The password confirmation does not match.',
             'phone.required' => 'The phone field is required.',
-            'email.mimes' => 'Profile Photo must be jpg,jpeg,png type',
             'phone.max' => 'The phone must not exceed 15 characters.',
             'phone.unique' => 'The phone has already been taken.',
             'address.max' => 'The address must not exceed 255 characters.',

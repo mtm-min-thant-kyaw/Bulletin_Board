@@ -25,15 +25,12 @@
             <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
                 <a class="navbar-brand" disabled>Bulletin_Board</a>
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    @if (Auth::check() && Auth::user()->type == 1)
                         <li class="nav-item">
                             <a class="nav-link  active" href="{{ route('user.userlist') }}">User</a>
                         </li>
-                    @endif
                     <li class="nav-item">
                         <a class="nav-link  active" href="{{ route('post.postlist') }}">Posts</a>
                     </li>
-
                 </ul>
                 <ul class="navbar-nav me-5">
                     <li class="nav-item">

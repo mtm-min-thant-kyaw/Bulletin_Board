@@ -5,18 +5,31 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Services\RegisterService;
 use App\Http\Requests\RegisterRequest;
+use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     public function userListPage()
     {
-        $users = User::with('createUser')->latest()->paginate(4);
+        $users = User::with('createUser')->where('id', '!=', Auth::user()->id)->latest()->paginate(4);
         return view('user.userList', compact('users'));
     }
     public function userCreatePage()
     {
-        $type =  ["user" => 0, "admin" => 1];
-        return view('user.createUser', compact('type'));
+
+        return view('user.createUser');
+    }
+    public function userConfirmPage(RegisterRequest $request)
+    {
+        $request->validated();
+        if ($request->hasFile('profile')) {
+            $fileName = uniqid() . $request->profile->getClientOriginalName();
+            $request->profile->storeAs('public', $fileName);
+        }
+        $data = $request->all();
+        $profile =['profile' => $fileName];
+        return view('User.confirmCreateUser',compact('data','profile'));
     }
     protected $registerService;
 
@@ -32,11 +45,7 @@ class UserController extends Controller
     public function store(RegisterRequest $request)
     {
 
-        try {
-            $user = $this->registerService->registerUser($request->validated());
-            return redirect()->route('user.userlist')->with('success', 'User Created Successfully');
-        } catch (\Exception $e) {
-            return redirect()->back()->withErrors($e->getMessage())->withInput();
-        }
+        $user = $this->registerService->registerUser($request->validated());
+        return redirect()->route('user.userlist')->with('success', 'User Created Successfully');
     }
 }

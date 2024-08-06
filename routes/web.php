@@ -17,7 +17,8 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/user/list', [UserController::class, 'userListPage'])->name('user.userlist');
 Route::get('/user/create', [UserController::class, 'userCreatePage'])->name('user.userCreatePage');
-Route::post('user/add', [UserController::class, 'store'])->name('user.add');//Common function for create user and update user
+Route::post('/user/confirm',[UserController::class,'userConfirmPage'])->name('user.confirmPage');
+Route::post('user/store', [UserController::class, 'store'])->name('user.add');//Common function for create user and update user
 
 
 Route::get('user/profile', [ProfileController::class, 'profilePage'])->name('user.profilePage');
