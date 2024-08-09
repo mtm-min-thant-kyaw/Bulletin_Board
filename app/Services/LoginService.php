@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use App\Models\User;
 
 class LoginService
 {
@@ -16,18 +16,11 @@ class LoginService
                 'email' => ['This email is not registered.'],
             ]);
         }
-
-        // Check if the password is correct
         if (!Auth::attempt(['email' => $data['email'], 'password' => $data['password']])) {
             throw ValidationException::withMessages([
                 'password' => ['Password incorrect.'],
             ]);
         }
-
         return Auth::user();
-    }
-    public function logoutUser()
-    {
-        return Auth::logout();
     }
 }

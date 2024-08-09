@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Fortify\TwoFactorAuthenticatable;
-use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -42,9 +40,39 @@ class User extends Authenticatable
         return $this->hasMany(Post::class, 'created_user_id');
     }
 
+    /**
+     * Return created user of a user
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function createUser()
     {
         return $this->belongsTo(User::class, 'created_user_id');
+    }
+
+    public function updateUser()
+    {
+        return $this->belongsTo(User::class, 'updated_user_id');
+    }
+
+    /**
+     * Search query for users
+     * @param mixed $query
+     * @param mixed $filters
+     * @return mixed
+     */
+    public function scopeSearch($query, $filters)
+    {
+        if (isset($filters['name'])) {
+            $query->where('name', 'like', '%' . $filters['name'] . '%');
+        }
+        if (isset($filters['email'])) {
+            $query->where('email', 'like', '%' . $filters['email'] . '%');
+        }
+        if (isset($filters['startDate']) && isset($filters['endDate'])) {
+            $query->whereBetween('created_at', [$filters['startDate'], $filters['endDate']]);
+        }
+
+        return $query;
     }
 
     /**

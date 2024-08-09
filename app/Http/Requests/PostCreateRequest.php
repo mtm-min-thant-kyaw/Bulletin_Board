@@ -26,6 +26,7 @@ class PostCreateRequest extends FormRequest
             'body' => 'required|min:10',
         ];
     }
+
     public function messages(): array
     {
         return [

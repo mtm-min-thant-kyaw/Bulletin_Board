@@ -6,6 +6,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -20,10 +22,12 @@ class DatabaseSeeder extends Seeder
                 'password' => Hash::make('Min553238@'),
                 'phone' => '09-880576046',
                 'address' => 'Kanbalu',
-                'type' => '1',
-                'dob' => '2000-10-10',
+                'type' => '0',
+                'dob' => Carbon::create('2000', '01', '01'),
                 'created_user_id' => '1',
                 'updated_user_id' => '1',
+                'created_at' => Carbon::now(),
+                'updated_at'=> Carbon::now(),
             ]
         );
     }
