@@ -20,17 +20,17 @@ class DatabaseSeeder extends Seeder
     {
         DB::table('users')->insert(
             [
-                'name' => 'Admin Account',
+                'name' => 'Min Thant Kyaw',
                 'email' => 'minthant1590@gmail.com',
                 'password' => Hash::make('Min553238@'),
                 'phone' => '09-880576046',
                 'address' => 'Kanbalu',
-                'type' => '1', //Admin
-                'dob' => '2000-10-10',
+                'type' => '0',
+                'dob' => Carbon::create('2000', '01', '01'),
                 'created_user_id' => '1',
                 'updated_user_id' => '1',
                 'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
+                'updated_at'=> Carbon::now(),
 
 
             ],

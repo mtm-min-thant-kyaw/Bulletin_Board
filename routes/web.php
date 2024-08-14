@@ -26,14 +26,16 @@ Route::middleware(['auth'])->group(function () {
 
     /**This route view to post list and work search function */
     Route::get('/post/list', [PostController::class, 'postListPage'])->name('post.postlist');
-    Route::get('/post/create/page', [PostController::class, 'postCreatePage'])->name('post.createPage');
-    Route::post('/post/create', [PostController::class, 'create'])->name('create');
+    Route::get('/post/create', [PostController::class, 'postCreatePage'])->name('post.createPage');
+    Route::post('/post/preview-create', [PostController::class, 'create'])->name('create');
     Route::post('/post/store', [PostController::class, 'store'])->name('post.store');
-    Route::get('/post/edit{id}', [PostController::class, 'postEditPage'])->name('post.edit');
-    Route::post('/post/update/page', [PostController::class, 'postEditConfirmPage'])->name('post.editConfirmPage');
-    Route::get('post/delete{id}', [PostController::class, 'destroy'])->name('post.destroy');
+    Route::get('post/delete/{id}', [PostController::class, 'destroy'])->name('post.destroy');
+    Route::get('/post/edit/{id}', [PostController::class, 'postEditPage'])->name('post.edit');
+    Route::post('post/{post}/preview-edit', [PostController::class, 'previewEdit'])->name('post.preview');
+    Route::post('post/{post}/update', [PostController::class, 'update'])->name('post.update');
 
     //Csv upload and download search result as excel file
+    Route::get('post/csv/upload',[PostController::class,'uploadPage'])->name('post.csvUpload');
     Route::post('/posts/upload', [PostController::class, 'uploadCsv'])->name('post.upload');
     Route::get('/posts/download', [PostController::class, 'downloadExcel'])->name('post.download');
 });

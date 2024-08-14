@@ -2,28 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PostCreateRequest;
-use App\Models\Post;
-use Illuminate\Pagination\Paginator;
-use App\Services\PostService;
-use Illuminate\Foundation\Mix;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Contracts\View\View as ViewView;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
+use Exception;
+use App\Http\Requests\PostCreateRequest;
+use App\Services\PostService;
+use App\Models\Post;
 
 class PostController extends Controller
 {
 
+    protected $postService;
+    /**
+     *
+     * @param \App\Services\PostService $postService
+     */
+    public function __construct(PostService $postService)
+    {
+        $this->postService = $postService;
+    }
     /**
      * This function return to post list page and compact post data by the type of user.
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function postListPage(Request $request)
+    public function postListPage(Request $request): View
     {
         $searchTerm = $request->input('searchKey');
-        $post = new Post();
-        $posts = $post->search($searchTerm);
-        // dd($posts);
+        $posts = $this->postService->getPosts($searchTerm);
+
         return view('post.postList', compact('posts', 'searchTerm'));
     }
 
@@ -31,40 +40,62 @@ class PostController extends Controller
      * This function return to Post Create Page.
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function postCreatePage()
+    public function postCreatePage(): View
     {
         return view('post.createPost');
     }
 
-    public function postEditPage($id)
+    /**
+     * Summary of postEditPage
+     * @param mixed $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function postEditPage($id): View
     {
         $post = Post::find($id);
         return view('post.editPost', compact('post'));
     }
 
-    public function postEditConfirmPage(PostCreateRequest $request)
+    /**
+     * Handel for preview data to confrim
+     * @param \App\Http\Requests\PostCreateRequest $request
+     * @param \App\Models\Post $post
+     * @return \Illuminate\View\View
+     */
+    public function previewEdit(PostCreateRequest $request, Post $post): View
     {
-        $request->validated();
-        $post = $request->all('id', 'title', 'body');
-        // dd($post);
-        return view('post.confirmEditPost', compact('post'));
-    }
-    protected $postService;
+        $validatedData = $request->all();
+        $updatedPost = $this->postService->handleEditPreview($post, $validatedData);
 
-    public function __construct(PostService $postService)
+        return view('post.confirmEditPost', compact('post', 'updatedPost'));
+    }
+
+    /**
+     * This function is post update function
+     * @param \App\Http\Requests\PostCreateRequest $request
+     * @param \App\Models\Post $post
+     * @return RedirectResponse
+     */
+    public function update(Request $request, Post $post): RedirectResponse
     {
-        $this->postService = $postService;
+        try {
+            DB::beginTransaction();
+            $this->postService->updatePost($post, $request->all());
+            DB::commit();
+            return redirect()->route('post.postlist', $post)->with('success', 'Post updated successfully.');
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()->route('post.edit', $post)->with('error', $e->getMessage());
+        }
     }
-
     /**
      * Pass created input data to post confirm page
      * @param \App\Http\Requests\PostCreateRequest $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function create(PostCreateRequest $request)
+    public function create(PostCreateRequest $request): View
     {
-
-        $data = $request->only('title', 'body');
+        $data = $request->only('title', 'description');
         $request->validated();
         return view('post.confirmCreatePost', compact('data'));
     }
@@ -74,37 +105,20 @@ class PostController extends Controller
      * @param \App\Http\Requests\PostCreateRequest $request
      * @return
      */
-    public function store(PostCreateRequest $request)
+    public function store(Request $request)
     {
 
-        $id = $request->id;
-        if ($id) {
-            $post = Post::find($id);
-
-            if (!$post) {
-                return redirect()->back()->with('error', 'Post not found.');
-            }
-            $request->validated();
-            $post->title = $request->input('title');
-            $post->body = $request->input('body');
-            $post->updated_user_id = Auth::id(); // Store the ID of the user who updated the post
-            $post->update();
-
-            return redirect()->route('post.postlist')->with('success', 'Post updated successfully.');
-        } else {
-            $post = $this->postService->createPost($request->validated());
-            if ($post) {
-                return redirect()->route('post.postlist')->with('success', 'Post created successfully.');
-            }
+        $post = $this->postService->createPost($request->all());
+        if ($post) {
+            return redirect()->route('post.postlist')->with('success', 'Post created successfully.');
         }
     }
-
     /**
      * Soft Delete Function
      * @param mixed $id
      * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy($id): RedirectResponse
     {
         $post = Post::find($id);
         if ($post) {
@@ -114,75 +128,42 @@ class PostController extends Controller
         return redirect()->route('post.postlist')->with('success', 'Post deleted successfully.');
     }
 
-    public function uploadCsv(Request $request)
+    /**
+     * Upload function for csv file
+     * @return ViewView|\Illuminate\Contracts\View\Factory
+     */
+    public function uploadPage(): View
     {
+        return view('post.csvUpload');
+    }
+
+    /**
+     * Post csv file upload function
+     * @param \Illuminate\Http\Request $request
+     * @return RedirectResponse
+     */
+    public function uploadCsv(Request $request): RedirectResponse
+    {
+        $request->validate(['csv_file' => 'required|file|mimes:csv']);
         if ($request->hasFile('csv_file')) {
             $file = $request->file('csv_file');
             $csvData = file_get_contents($file);
-            $rows = array_map('str_getcsv', explode("\n", $csvData));
-            $header = array_shift($rows);
-
-            foreach ($rows as $row) {
-                if (count($header) == count($row)) {
-                    $row = array_combine($header, $row);
-                    Post::create([
-                        'title' => $row['title'],
-                        'body' => $row['body'],
-                        'created_user_id' => Auth::user()->id,
-                    ]);
-                }
-            }
-        }else{
-            return redirect()->back()->with('success','Please Select Csv File');
+            $this->postService->uploadCsvData($csvData);
         }
-
         return redirect()->route('post.postlist')->with('success', 'CSV data uploaded successfully.');
     }
 
+    /**
+     * Download the search result with excel format
+     * @param \Illuminate\Http\Request $request
+     * @return mixed|\Symfony\Component\HttpFoundation\StreamedResponse
+     */
     public function downloadExcel(Request $request)
     {
-        $user = Auth::user();
         $searchTerm = $request->input('searchKey');
+        $writer = $this->postService->generateExcelFile($searchTerm);
 
-        $query = Post::query();
-
-        if ($user->type != 1) {
-            $query->where('created_user_id', $user->id);
-        }
-
-        if ($searchTerm) {
-            $query->where(function ($q) use ($searchTerm) {
-                $q->where('title', 'LIKE', "%{$searchTerm}%")
-                    ->orWhere('body', 'LIKE', "%{$searchTerm}%");
-            });
-        }
-
-        $posts = $query->get();
-
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-
-        // Add headers
-        $sheet->setCellValue('A1', 'ID');
-        $sheet->setCellValue('B1', 'Title');
-        $sheet->setCellValue('C1', 'Body');
-        $sheet->setCellValue('D1', 'Created User ID');
-        $sheet->setCellValue('E1', 'Created At');
-
-        // Add data rows
-        $row = 2;
-        foreach ($posts as $post) {
-            $sheet->setCellValue('A' . $row, $post->id);
-            $sheet->setCellValue('B' . $row, $post->title);
-            $sheet->setCellValue('C' . $row, $post->body);
-            $sheet->setCellValue('D' . $row, $post->created_user_id);
-            $sheet->setCellValue('E' . $row, $post->created_at);
-            $row++;
-        }
-
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
-
-        $filename = 'Post-List.xlsx';
+        $filename = 'posts.xlsx';
         return response()->stream(
             function () use ($writer) {
                 $writer->save('php://output');

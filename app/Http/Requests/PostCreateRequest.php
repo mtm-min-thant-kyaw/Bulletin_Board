@@ -22,8 +22,8 @@ class PostCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|max:255',
-            'body' => 'required|min:10',
+            'title' => 'required|max:255|unique:posts,title,' . $this->id,
+            'description' => 'required|min:10',
         ];
     }
     public function messages(): array
@@ -31,8 +31,9 @@ class PostCreateRequest extends FormRequest
         return [
             'title.requried' => 'Title is require.',
             'title.max' => 'Maximum limit is 255 characters.',
-            'body.required' => 'Body field is required',
-            'body.min' => 'Body must have at least 10 characters.'
+            'title.unique' => 'Post title must unique.',
+            'description.required' => 'Description field is required',
+            'description.min' => 'Description must have at least 10 characters.'
         ];
     }
 }

@@ -14,7 +14,8 @@ class Post extends Model
 
     protected $fillable = [
         'title',
-        'body',
+        'description',
+        'status',
         'created_user_id',
         'updated_user_id',
         'deleted_user_id',
@@ -37,22 +38,28 @@ class Post extends Model
         return $this->belongsTo(User::class, 'deleted_user_id');
     }
 
-    public  function search($searchTerm)
+    /**
+     * Search query by the type of user
+     * @param mixed $searchTerm
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public static function getFilteredPosts($searchTerm = null)
     {
         $user = Auth::user();
-        $query = Post::query();
+        $query = self::query();
 
         if ($user->type != 1) {
             $query->where('created_user_id', $user->id);
         }
+
         if ($searchTerm) {
             $query->where(function ($q) use ($searchTerm) {
                 $q->where('title', 'LIKE', "%{$searchTerm}%")
-                    ->orWhere('body', 'LIKE', "%{$searchTerm}%");
+                    ->orWhere('description', 'LIKE', "%{$searchTerm}%");
             });
         }
 
-        $post = $query->with('user','updateuser')->latest()->paginate(5);
+        $post = $query->with('user', 'updateuser')->latest()->paginate(5);
         return $post;
     }
 }

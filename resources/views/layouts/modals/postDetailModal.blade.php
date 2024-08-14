@@ -7,32 +7,51 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-
-                <div class="row bg-secondary shadow">
-                    <div class="col-6">
-
-                        <h4>Title</h4>
-                        <h4 class="form-control">{{ $post->title }}</h4>
-                        <h4>Status</h4>
-                        <h4 class="form-control">Active</h4>
-                        <h4>Created_at</h4>
-                        <h4 class="form-control">{{ $post->created_at->diffForHumans() }}</h4>
-                        <h4>Created_User</h4>
-                        <h4 class="form-control">{{ $post->user->name }}</h4>
-                        <h4>Updated_at</h4>
-                        <h4 class="form-control">{{ $post->updated_at }}</h4>
-                    </div>
-                    <div class="col-6">
-                        <h4>Description</h4>
-                        <textarea class="form-control" rows="10">{{ $post->body }}</textarea>
-
+                <div class="mb-3 row">
+                    <h4 class="col-4">Title</h4>
+                    <div class="col-sm-8 text-danger">
+                        <h6>{{ $post->title }}</h6>
                     </div>
                 </div>
-
+                <div class="mb-3 row">
+                    <h4 class="col-4">Description</h4>
+                    <div class="col-sm-8 text-danger">
+                        <h6>{{ $post->description }}</h6>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <h4 class="col-4">Status</h4>
+                    <div class="col-sm-8 text-danger">
+                        <h6>{{ $post->status !=null ? 'Active' : 'Inactive' }}</h6>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <h4 class="col-4">Created Date</h4>
+                    <div class="col-sm-8 text-danger">
+                        <h6>{{ $post->created_at->format('Y/m/d')}}</h6>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <h4 class="col-4">Created User</h4>
+                    <div class="col-sm-8 text-danger">
+                        <h6>{{ $post->user->name}}</h6>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <h4 class="col-4">Updated Date</h4>
+                    <div class="col-sm-8 text-danger">
+                        <h6>{{ $post->updated_at->format('Y/m/d')}}</h6>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <h4 class="col-4">Updated User</h4>
+                    <div class="col-sm-8 text-danger">
+                        <h6>{{ $post->updateuser->name}}</h6>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-
             </div>
         </div>
     </div>

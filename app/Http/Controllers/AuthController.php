@@ -30,8 +30,7 @@ class AuthController extends Controller
     public function loginUser()
     {
         $user = Auth::user();
-        // dd($user);
-        return view('layouts.app', compact('user'));
+        return view('includes.commons.app', compact('user'));
     }
 
     /**
