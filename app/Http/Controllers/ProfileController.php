@@ -4,23 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\RegisterRequest;
-use App\Services\RegisterService;
-use App\Models\User;
-use Exception;
+use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\UserRequest;
+use App\Services\UserService;
 
 class ProfileController extends Controller
 {
-    protected $registerService;
-    public function __construct(RegisterService $registerService)
+    protected $userService;
+    public function __construct(UserService $userService)
     {
-        $this->registerService = $registerService;
+        $this->userService = $userService;
     }
 
     /**
      * pass Auth user's data to profile page
      *
-     * @return \Illuminate\Contracts\View\View
+     * @return View
      */
     public function profilePage(): View
     {
@@ -31,29 +30,27 @@ class ProfileController extends Controller
     /**
      * pass Auth user's data to profile page
      *
-     * @param mixed $id
-     * @return \Illuminate\Contracts\View\View
+     * @param $id
+     * @return View
      */
     public function profileEditPage($id): View
     {
-        $user = User::find($id);
+        $user = $this->userService->getUserById($id);
         return view('user.editProfile', compact('user'));
     }
 
     /**
-     * Profile update function
+     * Update function for all user and profile
      *
-     * @param \App\Http\Requests\RegisterRequest $request
-     * @param mixed $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @param UserRequest $request
+     * @param $id
+     * @return RedirectResponse
      */
-    public function updateUser(RegisterRequest $request, $id)
+    public function updateUser(UserRequest $request, $id): RedirectResponse
     {
-        try {
-            $result = $this->registerService->updateProfile($request, $id);
-            return redirect()->route('user.userlist')->with($result);
-        } catch (Exception $e) {
-            return redirect()->back()->withErrors($e)->withInput();
-        }
+
+        $result = $this->userService->updateUserData($request, $id);
+        return redirect()->route('user.userlist')->with($result);
+
     }
 }

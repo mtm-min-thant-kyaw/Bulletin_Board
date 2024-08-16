@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use GuzzleHttp\Psr7\Query;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Carbon;
 
 class User extends Authenticatable
 {
@@ -62,15 +64,21 @@ class User extends Authenticatable
      */
     public function scopeSearch($query, $filters)
     {
+
         if (isset($filters['name'])) {
             $query->where('name', 'like', '%' . $filters['name'] . '%');
         }
         if (isset($filters['email'])) {
             $query->where('email', 'like', '%' . $filters['email'] . '%');
         }
-        if (isset($filters['startDate']) && isset($filters['endDate'])) {
-            $query->whereBetween('created_at', [$filters['startDate'], $filters['endDate']]);
-        }
+
+        if (!empty($filters['startDate']) && empty($filters['endDate'])) {
+            $query->whereDate('created_at', $filters['startDate']);
+            } elseif (!empty($filters['startDate']) && !empty($filters['endDate'])) {
+            $query->whereDate('created_at', '>=', $filters['startDate'])
+            ->whereDate('created_at', '<=', $filters['endDate']);
+         } elseif (empty($filters['startDate']) && !empty($filters['endDate'])) {
+            $query->whereDate('created_at', '<=', $filters['endDate']); }
 
         return $query;
     }
@@ -94,7 +102,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'dob' => 'date',
+        'dob' => 'datetime:Y-m-d',
         'deleted_at' => 'datetime',
     ];
 

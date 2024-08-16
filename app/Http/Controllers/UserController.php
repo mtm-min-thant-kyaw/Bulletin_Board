@@ -5,30 +5,35 @@ namespace App\Http\Controllers;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Exception;
 use Illuminate\Http\Request;
-use App\Http\Requests\RegisterRequest;
-use App\Services\RegisterService;
+use App\Http\Requests\UserRequest;
+use App\Services\UserService;
 use App\Models\User;
 
 class UserController extends Controller
 {
-    protected $registerService;
-    public function __construct(RegisterService $registerService)
+    protected $userService;
+    public function __construct(UserService $userService)
     {
-        $this->registerService = $registerService;
+        $this->userService = $userService;
     }
 
     /**
      * User List page with search function.
      *
-     *@param mixed $request
+     * @param mixed $request
      * @return View
      */
     public function userListPage(Request $request): view
     {
         $filters = $request->only(['name', 'email', 'startDate', 'endDate']);
-        $users = User::latest()->search($filters)->paginate(5);
+
+        if (Auth::user()->type == 1) {
+            $users = User::where('type', Auth::user()->type)->latest()->search($filters)->paginate(5);
+        } else {
+            $users = User::latest()->search($filters)->paginate(5);
+        }
+
         return view('user.userList', compact('users'));
     }
 
@@ -45,32 +50,31 @@ class UserController extends Controller
     /**
      * Pass data to user creation confirm page
      *
-     * @param \App\Http\Requests\RegisterRequest $request
-     * @return View|\Illuminate\Contracts\View\Factory
+     * @param \App\Http\Requests\UserRequest $request
+     * @return View
      */
-    public function userConfirmPage(RegisterRequest $request): View
+    public function userConfirmPage(UserRequest $request): View
     {
         $data = $request->all();
-        $fileName = uniqid() . $request->profile->getClientOriginalName();
-        $request->profile->storeAs('public', $fileName);
-        $data['profile'] = $fileName;
+        if (isset($data['profile'])) {
+            $fileName = uniqid() . $request->profile->getClientOriginalName();
+            $request->profile->storeAs('public', $fileName);
+            $data['profile'] = $fileName;
+        }
         return view('User.confirmCreateUser', compact('data'));
     }
 
     /**
-     *This function use as common to store new user and update user.
+     *This function use as common to store new user.
 
-     * @param \App\Http\Requests\RegisterRequest $request
+     * @param \App\Http\Requests\UserRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(RegisterRequest $request): RedirectResponse
+    public function store(UserRequest $request): RedirectResponse
     {
-        try {
-            $user = $this->registerService->registerUser($request);
-            return redirect()->route('user.userlist')->with('success', 'User Created Successfully');
-        } catch (Exception $e) {
-            return redirect()->route('user.userCreatePage')->withErrors($e)->with('success','Your have an account with this email.');
-        }
+
+        $this->userService->registerUser($request);
+        return redirect()->route('user.userlist')->with('success', 'User Created Successfully');
     }
 
     /**
@@ -81,12 +85,13 @@ class UserController extends Controller
      */
     public function userDelete($id): RedirectResponse
     {
-        $selectUser = User::find($id);
-        if ($selectUser->id != Auth::user()->id && $selectUser->type != 0) {
+        $this->userService->deleteUser($id);
 
-            $selectUser->delete();
-            return redirect()->back()->with('success','Deleted a user successfully.');
-        }
-        return back()->with('success', 'U can\'t delete this account.');
+        return redirect()->back()->with('success', 'Deleted a user successfully.');
+    }
+    public function userEdit($id)
+    {
+        $user = $this->userService->getUserById($id);
+        return view('User.edituser', compact('user'));
     }
 }

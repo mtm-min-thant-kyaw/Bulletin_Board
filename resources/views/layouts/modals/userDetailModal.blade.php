@@ -10,7 +10,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-3">
-                        <img src="{{ asset('Storage/' . $user->profile) }}" alt="" class="img-thumbnail">
+                        <img src="{{ asset('Storage/' . $user->profile) }}" alt="Profile Picture" class="img-thumbnail">
                     </div>
                     <div class="col-6">
                         <div class="mb-3 row">
@@ -52,7 +52,7 @@
                         <div class="mb-3 row">
                             <span for="dob" class="col-sm-6">Created Date</span>
                             <div class="col-sm-6">
-                                <span>{{ $user->created_at }}</span>
+                                <span>{{ $user->created_at->format('Y/m/d') }}</span>
                             </div>
                         </div>
                         <div class="mb-3 row">
@@ -64,7 +64,7 @@
                         <div class="mb-3 row">
                             <span for="dob" class="col-sm-6">Updated Date</span>
                             <div class="col-sm-6">
-                                <span>{{ $user->updated_at }}</span>
+                                <span>{{ $user->updated_at->format('Y/m/d') }}</span>
                             </div>
                         </div>
                         <div class="mb-3 row">

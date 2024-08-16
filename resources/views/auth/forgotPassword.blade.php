@@ -18,16 +18,19 @@
 
 <body>
     <div class="row">
-        <div class="col-6 bg-light mx-auto my-2 border border-dark py-3">
+        <div class="col-6 offset-3 bg-success">
             <h3 class="">Forgot Password?</h3>
-            <form action="">
+        </div>
+           <div class="col-6 offset-3 border border-success p-3">
+            <form action="" method="POST">
                 @csrf
                 <label for="">Email</label>
-                <input type="email" name="oldPassword" value="" class="form-control"
+                <input type="email" name="email" value="" class="form-control"
                     placeholder="Enter your email to reset your password">
                 <button type="submit" class="btn btn-success mt-2">Verify</button>
             </form>
-        </div>
+           </div>
+
     </div>
 </body>
 

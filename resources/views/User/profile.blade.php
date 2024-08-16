@@ -8,10 +8,10 @@
             <div class="row">
                 <div class="col-4">
                     @if ($authUser->profile)
-                        <img src="{{ asset('storage/' . $authUser->profile) }}" alt="Profile Photo"
+                        <img src="{{ asset('storage/' . $authUser->profile) }}" alt="Profile Picture"
                             class="img-fluid rounded-circle">
                     @else
-                        <img src="{{ asset('images/default_photo.png') }}" alt="Profile Photo"
+                        <img src="{{ asset('images/default_photo.png') }}" alt="Profile Picture"
                             class="img-fluid rounded-circle"><br>
                     @endif
                 </div>

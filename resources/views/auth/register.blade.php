@@ -50,7 +50,7 @@
                         <label for="password" class="col-sm-4 col-form-label">Confirm Password</label>
                         <div class="col-sm-8">
                             <input type="password" class="form-control" name="password_confirmation">
-                            @error('password')
+                            @error('password_confirmation')
                                 <small class="alert text-danger">{{ $message }}</small><br>
                             @enderror
                         </div>

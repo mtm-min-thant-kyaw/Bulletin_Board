@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class RegisterRequest extends FormRequest
+class UserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -20,16 +20,18 @@ class RegisterRequest extends FormRequest
     {
         $rules = [
             'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . Auth::user()->id . ',id',
-            'phone' => 'nullable|required|max:15|unique:users,phone,' . Auth::user()->id . ',id',
+            'email' => 'required|email|max:255|unique:users,email,' . $this->id . ',id',
+            'phone' => 'nullable|required|max:15|unique:users,phone,' .$this->id . ',id',
             'address' => 'nullable|max:255',
             'dob' => 'nullable|date',
+            'newProfile' => 'file|mimes:png,jpg,jpeg'
+
         ];
         if (!$this->id) {
             return array_merge($rules, ['password' => 'required|min:6|confirmed']);
         }
-        if (request()->path() === '') {
-            $rules['profile'] = 'required|mimes:jpg,png,jpeg';
+        if (!$this->id) {
+           return array_merge($rules,['profile' => 'required']);
         }
         return $rules;
     }
@@ -53,6 +55,7 @@ class RegisterRequest extends FormRequest
             'dob.date' => 'The date of birth must be a valid date.',
             'profile.required' => 'Profile field is require.',
             'profile.mimes' => 'Profile must be jpeg,png,jpg type.',
+            'profile.size' => 'Maximum image size is 5Mb.',
         ];
     }
 }

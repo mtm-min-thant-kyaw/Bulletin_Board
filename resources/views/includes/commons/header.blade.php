@@ -16,7 +16,7 @@
             </ul>
             <ul class="navbar-nav me-5">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('user.userCreatePage') }}">Create User</a>
+
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -26,6 +26,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{{ route('user.profilePage') }}">Profile</a></li>
+                        <li><a class="dropdown-item" href="{{route('user.passwordChange')}}">Change Password</a></li>
                         <li>
                             <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
                         </li>
