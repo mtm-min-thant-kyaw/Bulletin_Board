@@ -14,9 +14,10 @@ Route::get('/user/login', [AuthController::class, 'loginUser']); //To compact lo
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
-Route::get('/forgot-password',[PasswordController::class,'passwordForgot'])->name('password.request');
-Route::post('/forgot-password',[PasswordController::class,'sendResetLink'])->name('forgot_password.send');
-Route::get('reset-password/{token}', [AuthController::class, 'showResetForm'])->name('password.reset');
+Route::get('/forgot-password',[PasswordController::class,'showLinkRequestForm'])->name('password.request');
+Route::post('forgot-password', [PasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('/reset/password/{token}', [PasswordController::class, 'showResetPasswordForm'])->name('password.reset.form');
+Route::post('/reset/password', [PasswordController::class, 'resetPassword'])->name('password.reset');
 Route::middleware(['auth'])->group(function () {
     //user list,create,detail,delete
     Route::get('/user/list', [UserController::class, 'userListPage'])->name('user.userlist');

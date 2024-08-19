@@ -62,11 +62,11 @@ class UserService
             $user->phone = $data['phone'];
             $user->address = $data['address'] ?? null;
             $user->type = 1;
-           if(isset($data['profile'])){
-            $fileName = uniqid() . $data['profile']->getClientOriginalName();
-            $data['profile']->storeAs('Public', $fileName);
-            $user->profile = $fileName;
-           }
+            if (isset($data['profile'])) {
+                $fileName = uniqid() . $data['profile']->getClientOriginalName();
+                $data['profile']->storeAs('Public', $fileName);
+                $user->profile = $fileName;
+            }
             if (isset($data['dob'])) {
                 $user->dob = Carbon::parse(($data['dob']));
             }
@@ -103,7 +103,7 @@ class UserService
             $user->address = $request->input('address');
             // Handle profile image upload.
             if ($request->hasFile('newprofile')) {
-                Storage::disk('local')->delete('Storage'.$request->oldProfile);
+                Storage::disk('local')->delete('Storage' . $request->oldProfile);
                 $imageName = uniqid() . '.' . $request->newprofile->getClientOriginalName();
                 $request->newprofile->storeAs('Public', $imageName);
                 $user->profile = $imageName;
@@ -122,8 +122,7 @@ class UserService
         try {
             DB::beginTransaction();
             $user = User::findOrFail($id);
-            if ($user->id != Auth::user()->id)
-            {
+            if ($user->id != Auth::user()->id) {
                 $user->delete();
             }
             DB::commit();
@@ -133,7 +132,8 @@ class UserService
             throw $e;
         }
     }
-    public function getUserById(int $id){
+    public function getUserById(int $id)
+    {
         $user = User::findOrFail($id);
         return $user;
     }
