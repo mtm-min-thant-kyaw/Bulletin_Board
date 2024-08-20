@@ -1,75 +1,107 @@
-@extends('layouts.app')
+@extends('includes.commons.app')
 @section('content')
     <div class="row">
-        <div class="col-6 mx-auto border border-dark py-3">
-            <div class="bg-success shadow">
-                <h4>Register</h4>
-            </div>
-            <div class="bg-light">
-                <form action="{{ route('user.createUser') }}" method="POST" id="createUserForm">
-                    @csrf
-                    <label for="">Name</label>
-                    <input type="text" name="name" class="form-control" value="{{ old('name') }}">
-                    @error('name')
-                        <small class="alert text-danger">{{ $message }}</small><br>
-                    @enderror
-                    <label for="" class="my-2">Email Address</label>
-                    <input type="text" name="email" class="form-control" value="{{ old('email') }}">
-                    @error('email')
-                        <small class="alert text-danger">{{ $message }}</small><br>
-                    @enderror
-                    <label for="" class="my-2">Password</label>
-                    <input type="password" name="password" class="form-control">
-                    @error('password')
-                        <small class="alert text-danger">{{ $message }}</small><br>
-                    @enderror
-                    <label for="" class="my-2">Password Confirmation</label>
-                    <input type="password" name="password_confirmation" class="form-control">
-                    @error('password')
-                        <small class="alert text-danger">{{ $message }}</small><br>
-                    @enderror
-
-                    @if (Auth::check() && Auth::user()->type == 1)
-                        <label for="" class="my-2">Type</label>
-                        <select name="type" class="form-select" id="type" aria-label="Default select example">
-                            <option value="0">User</option>
-                            <option value="1">Admin</option>
-                        </select>
-                    @endif
-
-                    <label for="" class="my-2">Phone</label>
-                    <input type="text" name="phone" class="form-control" value="{{ old('phone') }}">
-                    @error('phone')
-                        <small class="alert text-danger">{{ $message }}</small><br>
-                    @enderror
-                    <label for="" class="my-2">Date Of Birth</label>
-                    <input type="date" id="start" name="dob" value="" class="form-control"
-                        value="{{ old('dob') }}">
-                    @error('dob')
-                        <small class="alert text-danger">{{ $message }}</small><br>
-                    @enderror
-                    <label for="">Address</label>
-                    <input type="text" name="address" class="form-control" value="{{ old('address') }}">
-                    @error('address')
-                        <small class="alert text-danger">{{ $message }}</small><br>
-                    @enderror
-                    <label for="">Profile</label>
-                    <input type="file" name="profile" class="form-control" value="{{ old('profile') }}">
-                    @error('profile')
-                        <small class="alert text-danger">{{ $message }}</small><br>
-                    @enderror
-                    <div>
-                        <input type="submit" value="Register" class="btn btn-success my-2">
-                        <button type="buuton" class="btn btn-primary" onclick="resetForm();">Clear</button>
-                    </div>
-
-                </form>
-            </div>
+        <div class="offset-3 col-6 rounded-top bg-success">
+            <h3 class="text-white">Register</h3>
         </div>
+        <div class="offset-3 col-6  border border-success bg-light">
+            <form action="{{ route('user.confirmPage') }}" method="POST" id="createUserForm" enctype="multipart/form-data">
+                @csrf
+                <div class="my-3 row">
+                    <label for="name" class="col-sm-4 col-form-label">Name</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="name" value="{{ old('name') }}">
+                        @error('name')
+                            <small class="alert text-danger">{{ $message }}</small><br>
+                        @enderror
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="email" class="col-sm-4 col-form-label">Email</label>
+                    <div class="col-sm-8">
+                        <input type="email" class="form-control" name="email" value="{{ old('email') }}">
+                        @error('email')
+                            <small class="alert text-danger">{{ $message }}</small><br>
+                        @enderror
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="password" class="col-sm-4 col-form-label">Password</label>
+                    <div class="col-sm-8">
+                        <input type="password" class="form-control" name="password">
+                        @error('password')
+                            <small class="alert text-danger">{{ $message }}</small><br>
+                        @enderror
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="password" class="col-sm-4 col-form-label">Confirm Password</label>
+                    <div class="col-sm-8">
+                        <input type="password" class="form-control" name="password_confirmation">
+                        @error('password')
+                            <small class="alert text-danger">{{ $message }}</small><br>
+                        @enderror
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="phone" class="col-sm-4 col-form-label">Phone</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="phone" value="{{ old('phone') }}">
+                        @error('phone')
+                            <small class="alert text-danger">{{ $message }}</small><br>
+                        @enderror
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="address" class="col-sm-4 col-form-label">Address</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="address" value="{{ old('address') }}">
+                        @error('address')
+                            <small class="alert text-danger">{{ $message }}</small><br>
+                        @enderror
+                    </div>
+                </div>
+                @if (Auth::check() && Auth::user()->type == 1)
+                    <input type="hidden" name="type" value="1">
+                @endauth
+                @if (Auth::check() && Auth::user()->type == 0)
+                    <div class="mb-3 row">
+                        <label for="type" class="col-sm-4 col-form-label">Type</label>
+                        <div class="col-sm-8">
+                            <select name="type" class="form-select">
+                                <option value="1">User</option>
+                                <option value="0">Admin</option>
+                            </select>
+                            @error('type')
+                                <small class="alert text-danger">{{ $message }}</small><br>
+                            @enderror
+                        </div>
+                    </div>
+                @endif
+                <div class="mb-3 row">
+                    <label for="dob" class="col-sm-4 col-form-label">Date of Birth</label>
+                    <div class="col-sm-8">
+                        <input type="date" class="form-control" name="dob" value="{{ old('dob') }}">
+                        @error('dob')
+                            <small class="alert text-danger">{{ $message }}</small><br>
+                        @enderror
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="inputPassword" class="col-sm-4 col-form-label">Profile</label>
+                    <div class="col-sm-8">
+                        <input type="file" class="form-control" name="profile">
+                        @error('profile')
+                            <small class="alert text-danger">{{ $message }}</small><br>
+                        @enderror
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <button type="submit" class="btn btn-success offset-4 col-2">Register</button>
+                    <button type="reset" class="btn btn-primary col-2 ms-2">Clear</button>
+                </div>
+
+        </form>
     </div>
-    <script>
-        function resetForm() {
-            document.getElementById("createUserForm").reset();
-        }
-    </script>
+</div>
 @endsection

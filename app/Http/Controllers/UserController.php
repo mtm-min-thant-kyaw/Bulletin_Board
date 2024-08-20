@@ -2,41 +2,96 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use App\Services\RegisterService;
-use App\Http\Requests\RegisterRequest;
+use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
+use App\Services\UserService;
+use App\Models\User;
 
 class UserController extends Controller
 {
-    public function userListPage()
+    protected $userService;
+    public function __construct(UserService $userService)
     {
-        $users = User::latest()->paginate(4);
+        $this->userService = $userService;
+    }
+
+    /**
+     * User List page with search function.
+     *
+     * @param mixed $request
+     * @return View
+     */
+    public function userListPage(Request $request): view
+    {
+        $filters = $request->only(['name', 'email', 'startDate', 'endDate']);
+
+        if (Auth::user()->type == 1) {
+            $users = User::where('type', Auth::user()->type)->latest()->search($filters)->paginate(5);
+        } else {
+            $users = User::latest()->search($filters)->paginate(5);
+        }
+
         return view('user.userList', compact('users'));
     }
-    public function userCreatePage()
+
+    /**
+     * direct to user create page
+     *
+     * @return View
+     */
+    public function userCreatePage(): View
     {
         return view('user.createUser');
     }
 
-    protected $registerService;
-
-    public function __construct(RegisterService $registerService)
-    {
-        $this->registerService = $registerService;
-    }
     /**
+     * Pass data to user creation confirm page
      *
-     * @param \App\Http\Requests\RegisterRequest $request
+     * @param \App\Http\Requests\UserRequest $request
+     * @return View
+     */
+    public function userConfirmPage(UserRequest $request): View
+    {
+        $data = $request->all();
+        if (isset($data['profile'])) {
+            $fileName = uniqid() . $request->profile->getClientOriginalName();
+            $request->profile->storeAs('public', $fileName);
+            $data['profile'] = $fileName;
+        }
+        return view('User.confirmCreateUser', compact('data'));
+    }
+
+    /**
+     *This function use as common to store new user.
+
+     * @param \App\Http\Requests\UserRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function createUser(RegisterRequest $request)
+    public function store(UserRequest $request): RedirectResponse
     {
-        try {
-            $user = $this->registerService->registerUser($request->validated());
-            return redirect()->route('user.userlist')->with('success', 'User Created Successfully');
-        } catch (\Exception $e) {
-            return redirect()->back()->withErrors($e->getMessage())->withInput();
-        }
+
+        $this->userService->registerUser($request);
+        return redirect()->route('user.userlist')->with('success', 'User Created Successfully');
+    }
+
+    /**
+     * Client can't delete by himself.Admin can delete all user.Users can delete that they are created.
+     *
+     * @param mixed $id
+     * @return mixed|RedirectResponse
+     */
+    public function userDelete($id): RedirectResponse
+    {
+        $this->userService->deleteUser($id);
+
+        return redirect()->back()->with('success', 'Deleted a user successfully.');
+    }
+    public function userEdit($id)
+    {
+        $user = $this->userService->getUserById($id);
+        return view('User.edituser', compact('user'));
     }
 }

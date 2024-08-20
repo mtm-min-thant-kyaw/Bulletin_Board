@@ -17,8 +17,7 @@
                         {{-- To Update Post Data --}}
                         <input type="submit" value="Update" class="btn btn-success my-2">
                         {{-- //Return back to edit post page --}}
-                       <a href="" class="btn btn-primary">Cancel</a>
-
+                        <input type="submit" value="Cancel" class="btn btn-secondary my-2">
                 </form>
             </div>
         </div>

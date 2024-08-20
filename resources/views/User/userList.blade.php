@@ -1,144 +1,100 @@
-@extends('layouts.app')
+@extends('includes.commons.app')
 @section('content')
-    <div class="row border border-dark">
-        <div class="col-12 bg-success rounded">
-            <h3>User List</h3>
+    @include('includes.css.user.liststyle')
+    <div class="row border border-success rounded">
+        <div class="col-lg-12 bg-success rounded-top d-flex">
+            <h3 class="text-white">User List</h3>
         </div>
-        <div class=" offset-1 col-10 my-3">
-            <form action="" class="form d-flex">
-                Name::<input type="text" class="form-control mx-2">
-                Emial::<input type="text" class="form-control">
-                From::<input type="date" id="start" name="startDate" value="" class="form-control mx-2">
-                to::<input type="date" id="start" name="endDate" value="" class="form-control">
+        <div class="col-12 form-group">
+            <a class="btn btn-success m-2" href="{{ route('user.userCreatePage') }}">Create User</a>
+            <button class="btn btn-success">Total User-{{$users->total()}}</button>
+            <form action="{{ route('user.userlist') }}" method="GET" class="d-flex my-3">
+                <h5>Name:</h5>
+                <input type="text" name="name" class="form-control mx-2" value="{{old('name')}}">
+                <h5>Email:</h5>
+                <input type="email" name="email" class="form-control" value="{{old('email')}}">
+                <h5>Form:</h5>
+                <input type="date" id="start" name="startDate" value="" class="form-control mx-2">
+                <h5>to:</h5>
+                <input type="date" id="start" name="endDate" value="" class="form-control">
+                <h5></h5>
                 <input type="submit" value="Search" class="btn btn-success mx-2">
             </form>
         </div>
         <div class="col-12">
-            <table class="table table-striped">
-                <tr class="table-primary">
-                    <th>No</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Created User</th>
-                    <th>Type</th>
-                    <th>Phone</th>
-                    <th>Date Of Birth</th>
-                    <th>Address</th>
-                    <th>Created_at</th>
-                    <th>Updated_at</th>
-                    <th>Operation</th>
-                </tr>
-                @foreach ($users as $index => $user)
-                    <tr class="table">
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->email }}</td>
-                        <td>{{ $user->created_user_id }}</td>
-                        <td>
-                            @if ($user->type == 1)
-                                Admin
-                            @else
-                                User
-                            @endif
-                        </td>
-                        <td>{{ $user->phone }}</td>
-                        <td>{{ $user->dob }}</td>
-                        <td>{{ $user->address }}</td>
-                        <td>{{ $user->created_at }}</td>
-                        <td>{{ $user->updated_at }}</td>
-                        <td>
-                            <!-- Button trigger modal -->
-                            <a class="btn btn-primary" href="" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                Details
-                            </a>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                                aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">User Details</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col-4">
-                                                    <img src="" alt="User's Photo">
-                                                </div>
-                                                <div class="col-8">
-                                                    <form action="" enctype="multipart/form-data">
-                                                        @csrf
-                                                        <label for="" class="form-control">Name:</label>
-                                                        <label for="" class="form-control">Emial:</label>
-                                                        <label for="" class="form-control">Phone:</label>
-                                                        <label for="" class="form-control">Address</label>
-                                                        <label for="" class="form-control">Type:</label>
-                                                        <label for="" class="form-control">Created_User:</label>
-                                                        <label for="" class="form-control">Created_at:</label>
-                                                        <label for="" class="form-control">Update User:</label>
-                                                        <label for="" class="form-control">Updated_at:</label>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Close</button>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {{-- Delete Confirm Modal --}}
-                            <a class="btn btn-danger" href="" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                                Delete
-                            </a>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                                aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure to delete?</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <form action="" enctype="multipart/form-data">
-                                                        @csrf
-                                                        <label for="" class="form-control">Name:</label>
-                                                        <label for="" class="form-control">Emial:</label>
-                                                        <label for="" class="form-control">Phone:</label>
-                                                        <label for="" class="form-control">Address</label>
-                                                        <label for="" class="form-control">Type:</label>
-                                                        <label for="" class="form-control">Created_User:</label>
-                                                        <label for="" class="form-control">Created_at:</label>
-                                                        <label for="" class="form-control">Update User:</label>
-                                                        <label for="" class="form-control">Updated_at:</label>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <a href="" class="btn btn-danger">Delete</a>
-                                            {{-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Delete</button> --}}
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-
+            @if (session('success'))
+                <div class="">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" id="error-msg">
+                        <i class="fa-solid fa-check"></i> {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+            @endif
+            <div class="table-responsive-xxl">
+                <table class="table table-striped text-center">
+                    <tr class="table-primary">
+                        <th>No</th>
+                        <th>Name</th>
+                        <th colspan="2">Email</th>
+                        <th colspan="2">Created User</th>
+                        <th>Type</th>
+                        <th>Phone</th>
+                        <th>Date Of Birth</th>
+                        <th colspan="2">Address</th>
+                        <th colspan="2">Created At</th>
+                        <th colspan="2">Updated At</th>
+                        @if (Auth::check() && Auth::user()->type != 1)
+                            <th>Operation</th>
+                        @endif
                     </tr>
-                @endforeach
-            </table>
-            {{ $users->links() }}
+                    @foreach ($users as $index => $user)
+                        @include('layouts.modals.userDetailModal')
+                        <tr class="table">
+                            <td>{{ $index + 1 }}</td>
+                            <td>
+                                <a class="text-decoration-none" href="" data-bs-toggle="modal"
+                                    data-bs-target="#detailModal{{ $user->id }}">
+                                    {{ $user->name }}
+                                </a>
+                            </td>
+                            <td colspan="2">{{ $user->email }}</td>
+                            <td colspan="2">{{ $user->createUser->name }}</td>
+                            <td>
+                                {{ $user->type == 0 ? 'Admin' : 'User' }}
+                            </td>
+                            <td>{{ $user->phone }}</td>
+                            <td>{{ $user->dob->format('Y/m/d') }}</td>
+                            <td colspan="2">{{ $user->address }}</td>
+                            <td colspan="2">{{ $user->created_at->format('Y/m/d') }}</td>
+                            <td colspan="2">{{ $user->updated_at->format('Y/m/d') }}</td>
+                            @if (Auth::check() && Auth::user()->type != 1 && Auth::id() != $user->id)
+                                <td>
+                                    <a href="{{route('user.edit',$user->id)}}" class="btn btn-success">Edit</a>
+                                    <a class="text-decoration-none btn btn-danger" href="" data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal{{ $user->id }}">
+                                        Delete
+                                    </a>
+                                </td>
+                                @else
+                                <td><a href="{{route('user.profilePage')}}"></a></td>
+                            @endif
+                        </tr>
+                        @include('layouts.modals.userDeleteModal')
+                    @endforeach
+                </table>
+            </div>
+           <div class="margin-auto"> {{ $users->links() }}</div>
         </div>
     </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var errorMessage = document.getElementById('error-msg');
+    if (errorMessage) {
+        setTimeout(() => {
+            errorMessage.style.display = 'none';
+        }, 3000); // 3 sec
+    }
+});
+</script>
 @endsection

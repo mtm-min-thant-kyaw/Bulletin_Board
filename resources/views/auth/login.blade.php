@@ -4,63 +4,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap CSS Link -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    {{-- Font awaesome CDN Link --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    @include('includes.commons.style')
+    @include('includes.commons.script')
     <title>Bulletin_Board_OJT</title>
 </head>
 
 <body>
     <div class="container">
-        <div class="rounded  ">
-            <div class="row">
-                <div class="offset-2 col-md-8 bg-success my-5">
-                    <h3>Login</h3>
-                </div>
+        <div class="row">
+            <div class="offset-3 col-md-6 bg-success mt-5 rounded-top text-white">
+                <h3>Login</h3>
             </div>
-            <div class="row">
-                <div class="offset-2 col-md-8">
-                    @if (session('success'))
-                        <div class="">
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                <i class="fa-solid fa-check"></i> {{ session('success') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                    aria-label="Close"></button>
-                            </div>
-                        </div>
-                    @endif
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                    <form action="{{ route('login') }}" method="POST">
-                        @csrf
-                        <label for="">Email Address</label>
-                        <input type="text" name="email" id="" value="{{ old('email') }}"
-                            placeholder="Enter Emial Address" class="form-control">
 
-                        <label for="">Password</label>
-                        <input type="password" name="password" id="" placeholder="Enter Password"
-                            class="form-control">
-
-                        <div class="d-flex">
-                            <input type="checkbox" name="remember">Remember Me
-                            <a href="" class="px-5 text-decoration-none">Forget Password?</a>
-                        </div>
-                        <button class="btn btn-success form-control mt-md-3" type="submit">Login</button>
-                    </form>
-                    <a href="{{ route('registerPage') }}" class="text-decoration-none">Create an Account?<i
-                            class="fa-solid fa-user-plus"></i></a>
+            <div class="offset-3 col-md-6 border border-success">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                @if (session('success'))
+                <div class="">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" id="error-msg">
+                        <i class="fa-solid fa-check"></i> {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                 </div>
+            @endif
+                <form action="{{ route('login') }}" method="POST">
+                    @csrf
+                    <div class="my-3 row">
+                        <label for="email" class="col-sm-2 col-form-label text-end">Email</label>
+                        <div class="col-sm-8">
+                            <input type="email" class="form-control" name="email" value="{{ old('email') }}">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="password" class="col-sm-2 col-form-label text-end">Password</label>
+                        <div class="col-sm-8">
+                            <input type="password" class="form-control" name="password" value="{{ old('password') }}">
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center">
+                        <input type="checkbox" name="remember">Remember Me
+                        <a href="{{route('password.request')}}" class="px-5 text-decoration-none">Forget Password?</a>
+                    </div>
+                    <div class="row">
+                        <button class="btn btn-success col-10 offset-1" type="submit">Login</button>
+                    </div>
+                </form>
+                <a href="{{ route('registerPage') }}" class="text-decoration-none  col-4 offset-2">Create an Account?<i
+                        class="fa-solid fa-user-plus"></i></a>
             </div>
         </div>
     </div>

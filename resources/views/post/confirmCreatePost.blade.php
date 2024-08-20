@@ -13,7 +13,7 @@
                     <input type="text" name="description" value="" class="form-control" disabled>
                     <div>
                         <input type="submit" value="Confirm" class="btn btn-success my-2">
-                        <button type="button" class="btn btn-primary">Cancel</button>
+                        <input type="submit" value="Cancel" class="btn btn-secondary my-2">
                     </div>
 
                 </form>

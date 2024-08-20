@@ -2,83 +2,98 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\LoginService;
-use App\Services\RegisterService;
-use App\Http\Requests\LoginRequest;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\RegisterRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
+use App\Http\Requests\SignUpRequest;
+use App\Http\Requests\LoginRequest;
+use App\Services\LoginService;
+use App\Services\UserService;
 
 class AuthController extends Controller
 {
-    public function loginPage()
+    protected $loginService;
+    protected $userService;
+    protected $passwordChangeService;
+    /**
+     * Constructor for LoginService and UserService
+     *
+     * @param \App\Services\LoginService $loginService
+     * @param \App\Services\UserService $userService
+     */
+    public function __construct(LoginService $loginService, UserService $userService)
+    {
+        $this->loginService = $loginService;
+        $this->userService = $userService;
+    }
+
+    /**
+     * user login page
+     * @return View
+     */
+    public function loginPage(): View
     {
         return view('auth.login');
     }
-    public function loginUser()
+
+    /**
+     * Return data of Auth user
+     *
+     * @return View
+     */
+    public function loginUser(): View
     {
         $user = Auth::user();
-        // dd($user);
         return view('layouts.app', compact('user'));
     }
-    public function registerPage()
+
+    /**
+     * Return to user register page
+     *
+     * @return View
+     */
+    public function registerPage(): View
     {
         return view('auth.register');
     }
 
-    protected $loginService;
-    protected $registerService;
-
-    public function __construct(LoginService $loginService, RegisterService $registerService)
-    {
-        $this->loginService = $loginService;
-        $this->registerService = $registerService;
-    }
     /**
      * This register function work register.blade.php
-     * @param \App\Http\Requests\RegisterRequest $request
+     *
+     * @param \App\Http\Requests\UserRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function register(RegisterRequest $request)
+    public function register(SignUpRequest $request): RedirectResponse
     {
-        try {
-            $user = $this->registerService->registerUser($request->validated());
-
-            return redirect()->route('loginPage')->with('success', 'Register Success.Login Again.');
-        } catch (\Exception $e) {
-            return redirect()->back()->withErrors($e->getMessage())->withInput();
+        $user = $this->userService->signUpUser($request);
+        if ($user) {
+            Auth::login($user);
+            $request->session()->put('loginId', $user->id);
+            return redirect()->route('user.userlist')->with('success', 'Account created successfully.');
+        } else {
+            return back();
         }
     }
-
 
     /**
      *
      * @param \App\Http\Requests\LoginRequest $request
-     * @return mixed|\Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function login(LoginRequest $request): RedirectResponse
     {
+        $user = $this->loginService->loginUser($request->validated());
+        $request->session()->put('loginId', $user->id);
 
-        try {
-            $user = $this->loginService->loginUser($request->validated());
-            $request->session()->put('loginId', $user->id);
-            // Redirect based on user role
-            if ($user->type == 1) {
-                return redirect()->route('user.userlist');
-            } else {
-                return redirect()->route('post.postlist');
-            }
-        } catch (ValidationException $e) {
-            return redirect()->back()->withErrors($e->errors())->withInput();
-        }
+        return redirect()->route('user.userlist');
     }
+
     public function logout()
     {
-        $data = array();
+
         if (Session::has('loginId')) {
+            Auth::logout();
             Session::pull('loginId');
 
             return redirect()->route('loginPage');

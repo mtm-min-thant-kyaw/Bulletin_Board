@@ -1,3 +1,4 @@
+@include('layouts.common.header')
 @extends('layouts.app')
 @section('content')
     @include('layouts.modals.postDetailModal')
@@ -11,6 +12,7 @@
                 Keyword::<input type="" class="form-control me-2">
                 <input type="submit" value="Search" class="btn btn-success">
             </form>
+
             <a href="{{ route('post.createPage') }}" class="btn btn-success">Create</a>
             <button class="btn btn-success">Upload</button>
             <button class="btn btn-success"> Download</button>

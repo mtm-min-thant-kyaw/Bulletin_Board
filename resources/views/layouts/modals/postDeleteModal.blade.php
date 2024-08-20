@@ -14,7 +14,6 @@
 </head>
 
 <body>
-
     <!-- Modal -->
     <div class="modal fade" id="delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -42,6 +41,7 @@
             </div>
         </div>
     </div>
+
 </body>
 <!-- Bootstrap Js Link -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

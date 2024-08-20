@@ -7,7 +7,6 @@
             </div>
             <div class="bg-light">
                 <form action="">
-                    @csrf
                     <label for="">Title</label>
                     <input type="text" name="title" class="form-control">
                     <label for="" class="my-2">Description</label>
@@ -16,7 +15,6 @@
                         <a href="" class="btn btn-success">Create</a>
                         <input type="submit" value="Cancel" class="btn btn-secondary my-2">
                     </div>
-
                 </form>
             </div>
         </div>
