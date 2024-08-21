@@ -19,6 +19,7 @@
                 <input type="text" name="searchKey" class="form-control me-2" value="{{ old('searchKey') }}">
                 <button type="submit" class="btn btn-success">Search</button>
             </form>
+
             <a href="{{ route('post.createPage') }}" class="btn btn-success">Create</a>
             <form action="" method="">
                 <a href="{{ route('post.csvUpload') }}" class="btn btn-success">Upload</a>

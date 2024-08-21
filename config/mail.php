@@ -45,6 +45,10 @@ return [
             'timeout' => null,
             'local_domain' => env('MAIL_EHLO_DOMAIN'),
         ],
+        'from' => [
+            'address' => env('MAIL_FROM_ADDRESS', 'mtm.minthantkyaw@gmail.com'),
+            'name' => env('MAIL_FROM_NAME', 'Min Thant Kyaw'),
+        ],
 
         'ses' => [
             'transport' => 'ses',

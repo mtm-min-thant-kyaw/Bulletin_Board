@@ -104,6 +104,7 @@ class PostController extends Controller
      * Store function work for new post creation and post update
      * @param \App\Http\Requests\PostCreateRequest $request
      * @return
+     * @return
      */
     public function store(Request $request)
     {

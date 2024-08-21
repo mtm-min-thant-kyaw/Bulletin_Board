@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
-class RegisterRequest extends FormRequest
+class UserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,25 +15,26 @@ class RegisterRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
-    public function rules(): array
+
+    public function rules()
     {
-        return [
+        $rules = [
             'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:8|confirmed',
-            'phone' => 'required|max:15|unique:users',
-            'address' => 'max:255',
-            'dob' => 'nullable',
-            'profile' => 'nullable|mimes:jpg,jpeg,png|max:2048',
+            'email' => 'required|email|max:255|unique:users,email,' . $this->id . ',id',
+            'phone' => 'nullable|required|max:15|unique:users,phone,' .$this->id . ',id',
+            'address' => 'nullable|max:255',
+            'dob' => 'nullable|date',
+            'newProfile' => 'file|mimes:png,jpg,jpeg'
 
         ];
+        if (!$this->id) {
+            return array_merge($rules, ['password' => 'required|min:6|confirmed']);
+        }
+        if (!$this->id) {
+           return array_merge($rules,['profile' => 'required']);
+        }
+        return $rules;
     }
-
 
     public function messages()
     {
@@ -47,11 +49,13 @@ class RegisterRequest extends FormRequest
             'password.min' => 'The password must be at least 8 characters.',
             'password.confirmed' => 'The password confirmation does not match.',
             'phone.required' => 'The phone field is required.',
-            'email.mimes' => 'Profile Photo must be jpg,jpeg,png type',
             'phone.max' => 'The phone must not exceed 15 characters.',
             'phone.unique' => 'The phone has already been taken.',
             'address.max' => 'The address must not exceed 255 characters.',
             'dob.date' => 'The date of birth must be a valid date.',
+            'profile.required' => 'Profile field is require.',
+            'profile.mimes' => 'Profile must be jpeg,png,jpg type.',
+            'profile.size' => 'Maximum image size is 5Mb.',
         ];
     }
 }

@@ -19,11 +19,16 @@
                         <h6>{{ $post->description }}</h6>
                     </div>
                 </div>
+<<<<<<< HEAD
                 <div class="mb-3 row">
                     <h4 class="col-4">Status</h4>
                     <div class="col-sm-8 text-danger">
                         <h6>{{ $post->status !=null ? 'Active' : 'Inactive' }}</h6>
                     </div>
+=======
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+>>>>>>> develop
                 </div>
                 <div class="mb-3 row">
                     <h4 class="col-4">Created Date</h4>

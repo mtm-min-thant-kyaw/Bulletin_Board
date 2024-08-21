@@ -2,12 +2,27 @@
 @section('content')
     <div class="row">
         <div class="col-8 bg-success rounded-top  mx-auto">
-            <h3 class="text-white">Profile Edit</h3>
+            <h3 class="text-white">Edit User Data</h3>
         </div>
-        <div class="col-8 bg-light mx-auto border border-success">
+        <div class="col-8 bg-light mx-auto border border-success p-3">
             <div class="row">
-                <div class="offset-3 col-6">
-                    <form action="{{ route('user.update', $user->id) }}" method="Post" enctype="multipart/form-data" id="myForm">
+                <div class="col-6">
+                    <div class="mb-3 row">
+                        <span for="dob" class="col-sm-3">Old Profile</span>
+                        <div class="col-sm-9">
+
+                            @if ($user->profile)
+                                <img src="{{ asset('storage/' . $user->profile) }}" alt="Profile Photo"
+                                    class="img-thumbnail">
+                            @else
+                                <img src="{{ asset('images/default_photo.png') }}" alt="Profile Photo"
+                                    class="img-thumbnail"><br>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <form action="{{route('user.update', $user->id) }}" method="Post" enctype="multipart/form-data" id="myForm">
                         @csrf
                         @method('PATCH')
                         <div class="mb-3 row">
@@ -73,21 +88,8 @@
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <span for="dob" class="col-sm-6">Old Profile</span>
-                            <div class="col-sm-6">
-                                @if ($user->profile)
-                                    <img src="{{ asset('storage/' . $user->profile) }}" alt="Profile Photo"
-                                        class="img-fluid rounded-circle">
-                                @else
-                                    <img src="{{ asset('images/default_photo.png') }}" alt="Profile Photo"
-                                        class="img-fluid rounded-circle"><br>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
                             <span for="dob" class="col-sm-6">Choose New Profile</span>
                             <div class="col-sm-6">
-                                {{-- <input type="hidden" value="{{$user->profile}}" name="oldProfile"> --}}
                                 <input type="file" name="newprofile" value="" class="form-control">
                                 @error('newprofile')
                                     <small class="alert text-danger">{{ $message }}</small><br>
@@ -97,7 +99,6 @@
                         <div class="mt-2">
                             <button type="submit" class="btn btn-success">Edit</button>
                             <button type="button" class="btn btn-primary" id="resetButton">Clear</button>
-                            <a href="" class="text-decoration-none">Change Password?</a>
                         </div>
                     </form>
                 </div>
