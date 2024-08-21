@@ -86,7 +86,7 @@ class AuthController extends Controller
         $user = $this->loginService->loginUser($request->validated());
         $request->session()->put('loginId', $user->id);
 
-        return redirect()->route('user.userlist');
+        return redirect()->route('post.postlist');
     }
 
     public function logout()

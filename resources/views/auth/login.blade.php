@@ -51,7 +51,7 @@
 
                     <div class="d-flex justify-content-center">
                         <input type="checkbox" name="remember">Remember Me
-                        <a href="{{route('password.request')}}" class="px-5 text-decoration-none">Forget Password?</a>
+                        <a href="" class="px-5 text-decoration-none">Forget Password?</a>
                     </div>
                     <div class="row">
                         <button class="btn btn-success col-10 offset-1" type="submit">Login</button>
