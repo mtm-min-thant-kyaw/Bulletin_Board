@@ -11,7 +11,7 @@
                         @csrf
                         @method('PATCH')
                         <div class="mb-3 row">
-                            <span for="name" class="col-sm-6">Name</span>
+                            <span for="dob" class="col-sm-6">Name</span>
                             <div class="col-sm-6">
                                 <input type="text" name="name" value="{{ $user->name}}"
                                     class="form-control" id="name">
@@ -61,6 +61,7 @@
                                 @enderror
                             </div>
                         </div>
+
                         <div class="mb-3 row">
                             <span for="address" class="col-sm-6">Address</span>
                             <div class="col-sm-6">
@@ -72,7 +73,7 @@
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <span for="profile" class="col-sm-6">Old Profile</span>
+                            <span for="dob" class="col-sm-6">Old Profile</span>
                             <div class="col-sm-6">
                                 @if ($user->profile)
                                     <img src="{{ asset('storage/' . $user->profile) }}" alt="Profile Photo"
@@ -86,6 +87,7 @@
                         <div class="mb-3 row">
                             <span for="dob" class="col-sm-6">Choose New Profile</span>
                             <div class="col-sm-6">
+                                {{-- <input type="hidden" value="{{$user->profile}}" name="oldProfile"> --}}
                                 <input type="file" name="newprofile" value="" class="form-control">
                                 @error('newprofile')
                                     <small class="alert text-danger">{{ $message }}</small><br>

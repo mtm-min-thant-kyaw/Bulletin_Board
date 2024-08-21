@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('remember_token',100)->nullable();
             $table->string('phone')->unique()->nullable();
             $table->string('address')->nullable();
             $table->integer('type')->default(1);

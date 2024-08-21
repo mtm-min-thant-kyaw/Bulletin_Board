@@ -8,8 +8,7 @@
             <form action="{{ route('password.change') }}" method="POST">
                 @csrf
                 <div class="mb-3 row">
-                    <label for="password" class="col-sm-4 col-form-label text-end">Current Password
-                        @error('password')
+                    <label for="password" class="col-sm-4 col-form-label text-end">Current Password @error('password')
                             <span class="text-danger">*</span>
                         @enderror
                     </label>
@@ -21,7 +20,7 @@
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="newpassword" class="col-sm-4 col-form-label text-end">New Password
+                    <label for="newpassword" class="col-sm-4 col-form-label text-end">New Password Password
                         @error('new_password')
                             <span class="text-danger">*</span>
                         @enderror
@@ -34,7 +33,7 @@
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="confirmpassword" class="col-sm-4 col-form-label text-end">New Confirm Passwod
+                    <label for="confirmpassword" class="col-sm-4 col-form-label text-end">New Confirm Password Password
                         @error('new_confirm_password')
                             <span class="text-danger">*</span>
                         @enderror
@@ -49,6 +48,7 @@
                 <div class="mb-3 row">
                     <button type="submit" class="btn btn-primary offset-4 col-3">Update Password</button>
                 </div>
+
             </form>
         </div>
     </div>
