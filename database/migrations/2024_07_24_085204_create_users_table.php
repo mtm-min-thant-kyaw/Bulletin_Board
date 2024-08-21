@@ -25,10 +25,10 @@ return new class extends Migration
             $table->unsignedBigInteger('updated_user_id');
             $table->unsignedBigInteger('deleted_user_id')->nullable();
             $table->dateTime('deleted_at')->nullable();
-            $table->timestamps();
             $table->foreign('created_user_id')->references('id')->on('users');
             $table->foreign('updated_user_id')->references('id')->on('users')->cascadeOnUpdate();
             $table->foreign('deleted_user_id')->references('id')->on('users');
+            $table->timestamps();
         });
     }
 
