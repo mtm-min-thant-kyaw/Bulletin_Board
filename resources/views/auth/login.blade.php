@@ -39,13 +39,13 @@
                     <div class="my-3 row">
                         <label for="email" class="col-sm-2 col-form-label text-end">Email</label>
                         <div class="col-sm-8">
-                            <input type="email" class="form-control" name="email" value="{{ old('email') }}">
+                            <input type="email" class="form-control" name="email" value="{{ old('email',$cachedEmail) }}">
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="password" class="col-sm-2 col-form-label text-end">Password</label>
                         <div class="col-sm-8">
-                            <input type="password" class="form-control" name="password" value="{{ old('password') }}">
+                            <input type="password" class="form-control" name="password" value="{{ old('password',$cachedPassword) }}">
                         </div>
                     </div>
 
