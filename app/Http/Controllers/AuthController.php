@@ -29,7 +29,7 @@ class AuthController extends Controller
     }
 
     /**
-     * user login page
+     * user login page return with remember me data
      * @return View
      */
     public function loginPage(): View
