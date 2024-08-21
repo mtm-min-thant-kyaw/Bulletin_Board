@@ -100,7 +100,6 @@
                     <button type="submit" class="btn btn-success offset-4 col-2">Register</button>
                     <button type="reset" class="btn btn-primary col-2 ms-2">Clear</button>
                 </div>
-
         </form>
     </div>
 </div>

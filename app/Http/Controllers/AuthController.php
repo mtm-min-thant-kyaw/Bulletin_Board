@@ -34,7 +34,11 @@ class AuthController extends Controller
      */
     public function loginPage(): View
     {
-        return view('auth.login');
+        $cachedData = $this->loginService->getCacheData();
+        return view('auth.login',[
+            'cachedEmail' => $cachedData['email'] ?? null,
+            'cachedPassword' => $cachedData['password'] ?? null,
+        ]);
     }
 
     /**
@@ -83,9 +87,9 @@ class AuthController extends Controller
      */
     public function login(LoginRequest $request): RedirectResponse
     {
-        $user = $this->loginService->loginUser($request->validated());
-        $request->session()->put('loginId', $user->id);
-
+        $remember = $request->has('remember');
+        $user = $this->loginService->loginUser($request->validated(), $remember);
+        $request->session()->put('loginId', $user);
         return redirect()->route('user.userlist');
     }
 
