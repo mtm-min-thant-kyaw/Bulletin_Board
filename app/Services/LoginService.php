@@ -4,7 +4,6 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Cache;
 use App\Models\User;
 
@@ -29,8 +28,6 @@ class LoginService
             }
             return ['success'];
         }
-
-
         $user = User::where('email', $data['email'])->first();
         if (!$user) {
             throw ValidationException::withMessages([
@@ -41,6 +38,7 @@ class LoginService
             'password' => ['Password incorrect.'],
         ]);
     }
+
     public function getCacheData()
     {
         return Cache::get('remember_data');
