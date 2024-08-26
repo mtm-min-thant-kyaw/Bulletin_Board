@@ -62,4 +62,9 @@ class Post extends Model
         $post = $query->with('user', 'updateuser')->latest()->paginate(5);
         return $post;
     }
+
+    public static function createNewPost(array $data): self
+    {
+        return self::create($data);
+    }
 }

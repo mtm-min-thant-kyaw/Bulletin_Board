@@ -36,6 +36,6 @@ Route::middleware(['auth'])->group(function () {
 
     //Csv upload and download search result as excel file
     Route::get('post/csv/upload',[PostController::class,'uploadPage'])->name('post.csvUpload');
-    Route::post('/posts/upload', [PostController::class, 'uploadCsv'])->name('post.upload');
-    Route::get('/posts/download', [PostController::class, 'downloadExcel'])->name('post.download');
+    Route::post('/post/upload', [PostController::class, 'uploadCsv'])->name('post.upload');
+    Route::get('/post/download', [PostController::class, 'downloadExcel'])->name('post.download');
 });

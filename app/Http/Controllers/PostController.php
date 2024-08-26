@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Contracts\View\View as ViewView;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use Exception;
 use App\Http\Requests\PostCreateRequest;
 use App\Services\PostService;
 use App\Models\Post;
@@ -26,7 +23,7 @@ class PostController extends Controller
     }
     /**
      * This function return to post list page and compact post data by the type of user.
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return View
      */
     public function postListPage(Request $request): View
     {
@@ -48,7 +45,7 @@ class PostController extends Controller
     /**
      * Summary of postEditPage
      * @param mixed $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return View
      */
     public function postEditPage($id): View
     {
@@ -58,9 +55,9 @@ class PostController extends Controller
 
     /**
      * Handel for preview data to confrim
-     * @param \App\Http\Requests\PostCreateRequest $request
-     * @param \App\Models\Post $post
-     * @return \Illuminate\View\View
+     * @param $request
+     * @param $post
+     * @return View
      */
     public function previewEdit(PostCreateRequest $request, Post $post): View
     {
@@ -72,21 +69,20 @@ class PostController extends Controller
 
     /**
      * This function is post update function
-     * @param \App\Http\Requests\PostCreateRequest $request
-     * @param \App\Models\Post $post
+     * @param $request
+     * @param $post
      * @return RedirectResponse
      */
     public function update(Request $request, Post $post): RedirectResponse
     {
-        try {
-            DB::beginTransaction();
-            $this->postService->updatePost($post, $request->all());
-            DB::commit();
+
+        $post = $this->postService->updatePost($post, $request->all());
+        if ($post) {
+
             return redirect()->route('post.postlist', $post)->with('success', 'Post updated successfully.');
-        } catch (Exception $e) {
-            DB::rollBack();
-            return redirect()->route('post.edit', $post)->with('error', $e->getMessage());
         }
+
+        return redirect()->route('post.edit', $post)->with('error', 'Post can\'t be update.');
     }
     /**
      * Pass created input data to post confirm page
@@ -102,9 +98,8 @@ class PostController extends Controller
 
     /**
      * Store function work for new post creation and post update
-     * @param \App\Http\Requests\PostCreateRequest $request
-     * @return
-     * @return
+     * @param $request
+     * @retur RedirectResponse
      */
     public function store(Request $request)
     {
@@ -121,17 +116,19 @@ class PostController extends Controller
      */
     public function destroy($id): RedirectResponse
     {
-        $post = Post::find($id);
-        if ($post) {
-            $post->delete();
-        }
+        $deleted = $this->postService->softDeletePost($id);
+        if ($deleted) {
 
-        return redirect()->route('post.postlist')->with('success', 'Post deleted successfully.');
+            return redirect()->route('post.postlist')->with('success', 'Post deleted successfully.');
+        } else {
+
+            return redirect()->route('post.postlist')->with('error', 'Post not found.');
+        }
     }
 
     /**
      * Upload function for csv file
-     * @return ViewView|\Illuminate\Contracts\View\Factory
+     * @return View
      */
     public function uploadPage(): View
     {
@@ -140,7 +137,7 @@ class PostController extends Controller
 
     /**
      * Post csv file upload function
-     * @param \Illuminate\Http\Request $request
+     * @param $request
      * @return RedirectResponse
      */
     public function uploadCsv(Request $request): RedirectResponse
@@ -156,8 +153,8 @@ class PostController extends Controller
 
     /**
      * Download the search result with excel format
-     * @param \Illuminate\Http\Request $request
-     * @return mixed|\Symfony\Component\HttpFoundation\StreamedResponse
+     * @param $request
+     * @return mixed
      */
     public function downloadExcel(Request $request)
     {

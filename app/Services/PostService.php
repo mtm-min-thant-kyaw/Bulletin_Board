@@ -4,7 +4,6 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
-use PhpOffice\PhpSpreadsheet\Reader\Xls;
 
 class PostService
 {
@@ -31,8 +30,8 @@ class PostService
 
     /**
      * Preview function for edited post to confirm
-     * @param mixed $post
-     * @param mixed $validatedData
+     * @param $post
+     * @param $validatedData
      * @return array
      */
     public function handleEditPreview($post, $validatedData): array
@@ -48,7 +47,7 @@ class PostService
 
     /**
      * Update Function for post
-     * @param \App\Models\Post $post
+     * @param $post
      * @param array $data
      * @return Post
      */
@@ -66,7 +65,7 @@ class PostService
 
     /**
      * Get posts by the type of user
-     * @param mixed $searchTerm
+     * @param $searchTerm
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function getPosts($searchTerm = null)
@@ -76,7 +75,7 @@ class PostService
 
     /**
      * Summary of uploadCsvData
-     * @param mixed $csvData
+     * @param $csvData
      * @return void
      */
     public function uploadCsvData($csvData) : void
@@ -137,5 +136,19 @@ class PostService
 
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
         return $writer;
+    }
+    /**
+     * Post delete
+     * @param int $id
+     * @return bool
+     */
+    public function softDeletePost(int $id): bool
+    {
+        $post = Post::find($id);
+        if ($post) {
+            return $post->delete();
+        }
+
+        return false;
     }
 }

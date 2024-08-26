@@ -20,7 +20,7 @@ class PostFactory extends Factory
     {
         return [
             'title' => $this->faker->title(),
-            'body' => $this->faker->paragraph(),
+            'description' => $this->faker->paragraph(),
             'created_user_id' => $this->faker->randomDigit(),
              'updated_user_id'=> $this->faker->randomDigit(),
         ];

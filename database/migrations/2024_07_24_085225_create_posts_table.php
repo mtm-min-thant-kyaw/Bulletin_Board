@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title')->unique('title');
             $table->longText('description');
             $table->integer('status')->default(1);
-            $table->unsignedBigInteger('created_user_id');
+            $table->unsignedBigInteger('created_user_id')->nullable();
             $table->unsignedBigInteger('updated_user_id')->nullable();
             $table->unsignedBigInteger('deleted_user_id')->nullable();
             $table->dateTime('deleted_at')->nullable();
