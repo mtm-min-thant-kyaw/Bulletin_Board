@@ -81,7 +81,7 @@ class AuthController extends Controller
     }
 
     /**
-     *
+     *This function work for login.
      * @param \App\Http\Requests\LoginRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -91,7 +91,7 @@ class AuthController extends Controller
         $user = $this->loginService->loginUser($request->validated(), $remember);
         $request->session()->put('loginId', $user);
 
-        return redirect()->route('user.userlist');
+        return redirect()->route('post.postlist');
     }
 
     public function logout()
@@ -100,7 +100,7 @@ class AuthController extends Controller
         if (Session::has('loginId')) {
             Auth::logout();
             Session::pull('loginId');
-
+            Auth::logout();
             return redirect()->route('loginPage');
         }
     }

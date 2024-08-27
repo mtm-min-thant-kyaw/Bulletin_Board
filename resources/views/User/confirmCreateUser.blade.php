@@ -1,5 +1,6 @@
 @extends('includes.commons.app')
 @section('content')
+
     <div class="row">
         <div class="offset-3 col-6 rounded-top bg-success">
             <h3 class="text-white">Register Confirm</h3>

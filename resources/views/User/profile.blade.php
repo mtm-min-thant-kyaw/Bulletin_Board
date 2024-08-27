@@ -1,5 +1,6 @@
 @extends('includes.commons.app')
 @section('content')
+
     <div class="row">
         <div class="col-8 bg-success rounded-top  mx-auto">
             <h3 class="text-white">Profile</h3>

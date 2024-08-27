@@ -29,22 +29,8 @@ class UserSeeder extends Seeder
                     'created_user_id' => '1',
                     'updated_user_id' => '1',
                     'created_at' => Carbon::now(),
-                    'updated_at'=> Carbon::now()
+                    'updated_at' => Carbon::now(),
                 ],
-                [
-                    'name' => 'User',
-                    'email' => 'minthant1590@gmail.com',
-                    'password' => Hash::make('Min553238@'),
-                    'phone' => '09-880576040',
-                    'address' => 'Yangon',
-                    'type' => '1',
-                    'dob' => Carbon::create('2001', '10', '01'),
-                    'created_user_id' => '1',
-                    'updated_user_id' => '1',
-                    'created_at' => Carbon::now(),
-                    'updated_at'=> Carbon::now()
-                ],
-
             ];
 
             foreach ($customersData as $data) {
