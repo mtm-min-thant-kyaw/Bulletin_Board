@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use App\Http\Requests\SignUpRequest;
 use App\Http\Requests\LoginRequest;
+use App\Jobs\DailyReport;
 use App\Services\LoginService;
 use App\Services\UserService;
 
@@ -90,7 +91,6 @@ class AuthController extends Controller
         $remember = $request->has('remember');
         $user = $this->loginService->loginUser($request->validated(), $remember);
         $request->session()->put('loginId', $user);
-
         return redirect()->route('post.postlist');
     }
 
@@ -101,6 +101,7 @@ class AuthController extends Controller
             Auth::logout();
             Session::pull('loginId');
             Auth::logout();
+
             return redirect()->route('loginPage');
         }
     }
