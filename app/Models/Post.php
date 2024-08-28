@@ -67,4 +67,7 @@ class Post extends Model
     {
         return self::create($data);
     }
+    public static function getLatestPosts(){
+        return self::query()->latest()->paginate(10);
+    }
 }
