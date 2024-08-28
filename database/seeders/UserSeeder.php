@@ -29,7 +29,20 @@ class UserSeeder extends Seeder
                     'created_user_id' => '1',
                     'updated_user_id' => '1',
                     'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
+                    'updated_at'=> Carbon::now()
+                ],
+                [
+                    'name' => 'User',
+                    'email' => 'minthantkyaw@metateammyanmar.com',
+                    'password' => Hash::make('Min553238@'),
+                    'phone' => '09-880576040',
+                    'address' => 'Yangon',
+                    'type' => '0',
+                    'dob' => Carbon::create('2001', '10', '01'),
+                    'created_user_id' => '2',
+                    'updated_user_id' => '2',
+                    'created_at' => Carbon::now(),
+                    'updated_at'=> Carbon::now()
                 ],
             ];
 

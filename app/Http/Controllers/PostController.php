@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostCreateRequest;
+use App\Jobs\SendBdWish;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Foundation\Mix;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use App\Http\Requests\PostCreateRequest;
 use App\Services\PostService;
 use App\Models\Post;
 
@@ -93,6 +96,7 @@ class PostController extends Controller
     {
         $data = $request->only('title', 'description');
         $request->validated();
+
         return view('post.confirmCreatePost', compact('data'));
     }
 

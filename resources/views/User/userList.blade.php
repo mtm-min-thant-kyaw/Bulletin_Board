@@ -69,11 +69,13 @@
                             <td colspan="2">{{ $user->updated_at->format('Y/m/d') }}</td>
                             @if (Auth::check() && Auth::user()->type != 1 && Auth::id() != $user->id)
                                 <td>
-                                    <a href="{{route('user.edit',$user->id)}}" class="btn btn-success">Edit</a>
+                                    <div class="d-flex">
+                                        <a href="{{route('user.edit',$user->id)}}" class="btn btn-success">Edit</a>
                                     <a class="text-decoration-none btn btn-danger" href="" data-bs-toggle="modal"
                                         data-bs-target="#deleteModal{{ $user->id }}">
                                         Delete
                                     </a>
+                                    </div>
                                 </td>
                                 @else
                                 <td><a href="{{route('user.profilePage')}}"></a></td>

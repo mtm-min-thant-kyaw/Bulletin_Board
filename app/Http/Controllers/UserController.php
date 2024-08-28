@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\Services\UserService;
 use App\Models\User;
+use App\Jobs\SendBdWish;
 
 class UserController extends Controller
 {
@@ -85,9 +86,11 @@ class UserController extends Controller
      */
     public function userDelete($id): RedirectResponse
     {
-        $this->userService->deleteUser($id);
+        $user =$this->userService->deleteUser($id);
+        SendBdWish::dispatch($user);
 
         return redirect()->back()->with('success', 'Deleted a user successfully.');
+
     }
     public function userEdit($id)
     {
