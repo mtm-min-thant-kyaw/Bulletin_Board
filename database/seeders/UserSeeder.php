@@ -33,14 +33,14 @@ class UserSeeder extends Seeder
                 ],
                 [
                     'name' => 'User',
-                    'email' => 'minthant1590@gmail.com',
+                    'email' => 'minthantkyaw@metateammyanmar.com',
                     'password' => Hash::make('Min553238@'),
                     'phone' => '09-880576040',
                     'address' => 'Yangon',
-                    'type' => '1',
+                    'type' => '0',
                     'dob' => Carbon::create('2001', '10', '01'),
-                    'created_user_id' => '1',
-                    'updated_user_id' => '1',
+                    'created_user_id' => '2',
+                    'updated_user_id' => '2',
                     'created_at' => Carbon::now(),
                     'updated_at'=> Carbon::now()
                 ],
